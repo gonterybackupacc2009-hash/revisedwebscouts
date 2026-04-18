@@ -1,0 +1,166 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .content-section {
+            max-width: 1200px;
+            margin: 120px auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            min-height: 400px;
+        }
+
+        .content-text {
+            flex: 1;
+            padding: 40px;
+            background: linear-gradient(135deg, #ffffff, #ffffff);
+        }
+
+        .content-image {
+            flex: 1;
+            height: 420px;
+            background: #ddd;
+            border: 2px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 18px;
+            min-width: 640px;
+        }
+
+        .content-section.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .content-text h2 {
+            color: #070d7a;
+            font-size: 44px;
+            margin-bottom: 20px;
+            font-weight: 780;
+        }
+        .emailphone {
+            text-align: right;
+            line-height: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+        .content-text p {
+            font-size: 22px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #eee;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .emailphone {
+            text-align: center;
+            line-height: 25px;
+            margin-right: 14%;
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+        }
+            .nav-buttons {
+                display: none;
+            }
+
+    .header-white-content {
+        padding: 0 15px !important;
+    }
+    .header-blue {
+        padding: 20px 15px !important;
+        padding-top: 64px !important;
+    }
+    .header-blue-content {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 8px !important;
+        padding: 0 10px !important;
+    }
+    .blue-logo {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        margin: 0 !important;
+        flex-shrink: 0 !important;
+    }
+    .blue-logo img {
+        width: 42px !important;
+        height: 42px !important;
+    }
+    .blue-text {
+        display: block !important;
+        text-align: center !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+    .blue-text h3 {
+        font-size: 18px !important;
+        margin: 0 0 2px 0 !important;
+    }
+    .blue-text .outfit-id {
+        font-size: 14px !important;
+    }
+    .emailphone {
+        display: none !important;  /* HIDDEN ON MOBILE */
+    }
+
+            .content-section {
+                flex-direction: column;
+                margin: 40px auto;
+                gap: 20px;
+            }
+
+            .content-section.reverse {
+                flex-direction: column;
+            }
+
+            .content-image {
+                min-width: auto;
+                height: 200px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .sidebar {
+                width: 260px;
+                left: -260px;
+            }
+
+            .content-text {
+                padding: 20px;
+            }
+
+            .content-text h2 {
+                font-size: 24px;
+            }
+        }

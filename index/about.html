@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MNCHS Senior Scouting</title>
+    <link rel="icon" type="image/x-icon" href="/images/org-logo.png">
+    <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="../headerfooter/headerfooter.css">
+
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="resources.html">Resources</a>
+            <a href="leadership.html">Leadership</a>
+            <a href="history.html">History</a>
+            <a href="shop.html">Shop</a>
+        </nav>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+<!-- HEADER WILL BE LOADED HERE -->
+<div id="header-placeholder"></div>
+
+    <main>
+        <section class="content-section">
+            <div class="content-text">
+                <h2>BSP MISSION 2025</h2>
+                <p>To help the youth develop values and acquire competencies to become responsible leaders and capable anchored on the Scout Oath and Law.</p>
+            </div>
+            <img src="../images/aboutimages/MISION.png" class="content-image">
+        </section>
+
+        <section class="content-section reverse">
+            <div class="content-text">
+                <h2>BSP VISION 2025</h2>
+                <p>Foremost in preparing the youth to become agents of change in communities guided by the Scout Oath and Law.</p>
+            </div>
+            <img src="../images/aboutimages/VISSION.png" class="content-image">
+        </section>
+        <div id="footer-placeholder"></div>
+    </main>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            const spans = hamburger.querySelectorAll('span');
+            if (sidebar.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        }
+
+        hamburger.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
+        document.querySelectorAll('.sidebar-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+                const spans = hamburger.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+    </script>
+<script>
+        // Load Header (includes sidebar!) & Footer
+        fetch('../headerfooter/header.html')
+            .then(r => r.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                initNavigation();
+            });
+
+        fetch('../headerfooter/footer.html')
+            .then(r => r.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
+        // UNIVERSAL NAVIGATION
+        function setActiveNav() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const pageMap = {
+                'index.html': 'home',
+                'about.html': 'about',
+                'resources.html': 'resources',
+                'leadership.html': 'leadership',
+                'history.html': 'history',
+                'shop.html': 'shop'
+            };
+            const currentDataPage = pageMap[currentPage] || 'home';
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.page === currentDataPage) btn.classList.add('active');
+            });
+
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === currentDataPage) link.classList.add('active');
+            });
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            const spans = hamburger.querySelectorAll('span');
+            if (sidebar.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                document.body.style.overflow = 'hidden';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
+        function initNavigation() {
+            setActiveNav();
+            document.getElementById('hamburger').onclick = toggleSidebar;
+            document.getElementById('overlay').onclick = toggleSidebar;
+            
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.getElementById('sidebar').classList.remove('active');
+                    document.getElementById('overlay').classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+            
+            window.addEventListener('popstate', setActiveNav);
+        }
+
+        window.addEventListener('load', () => setTimeout(initNavigation, 100));
+    </script>
+</body>
+</html>
