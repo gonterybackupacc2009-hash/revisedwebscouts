@@ -1,0 +1,205 @@
+/* MAIN CONTAINER */
+.main-content {
+    padding: 20px;
+    min-height: calc(100vh - 200px);
+}
+
+/* PERFECTLY WORKING SINGLE COLUMN RANKS - BLUE THEME */
+.ranks-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.rank-item {
+    border: 2px solid #080347;
+    background: linear-gradient(135deg, #f8f9ff, #e8f0ff);
+    cursor: pointer;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rank-item:hover {
+    transform: translateY(-2px);
+}
+
+.rank-item.active {
+    border-color: #090467;
+    transform: translateY(-4px);
+}
+
+.rank-header {
+    display: flex;
+    align-items: center;
+    padding: 25px 30px;
+    gap: 20px;
+    background: white;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.rank-item.active .rank-header {
+    background: linear-gradient(135deg, #0e025d, #0d0351);
+}
+
+.rank-insignia {
+    width: 65px;
+    height: 65px;
+    flex-shrink: 0;
+}
+
+.rank-insignia img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.rank-name {
+    flex: 1;
+    font-size: 24px;
+    font-weight: 700;
+    color: #070258;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.rank-item.active .rank-name {
+    color: white;
+}
+
+.rank-arrow {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 12px solid #000000;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.rank-item.active .rank-arrow {
+    transform: rotate(180deg);
+    border-top-color: white;
+}
+.resource-card-header {
+    background-color: #010160 !important;
+    padding-left: 25px !important;
+    font-size: 21px;
+    width: 100% !important;
+    height: 45px !important;
+    display: flex !important;
+    gap: 30px !important;
+    align-items: center !important;
+    text-align: center;
+    color: white;
+    font-weight: 700;
+    overflow: hidden !important;
+}
+.rank-dropdown {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+    background-color: #f5f5f5;
+}
+
+.rank-dropdown.active {
+    max-height: 5000px;
+    padding: 0 30px 30px;
+}
+
+.merit-icon {
+    text-align: center;
+    margin: 25px 0 20px;
+}
+
+.merit-icon img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.requirements {
+    color: #333;
+    line-height: 1.7;
+    font-size: 15.5px;
+    border-top: 2px solid #E3F2FD;
+    padding-top: 20px;
+}
+
+.requirements strong {
+    color: #d21919;
+    font-size: 16px;
+}
+
+/* TAB CONTENT */
+.tab-content {
+    padding: 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 15px;
+    }
+    
+    .ranks-grid {
+        max-width: 100%;
+    }
+    
+    .rank-header {
+        padding: 20px 25px;
+        gap: 15px;
+    }
+    
+    .rank-insignia {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .rank-name {
+        font-size: 20px;
+    }
+    
+    .rank-dropdown.active {
+        padding: 0 25px 25px;
+    }
+    
+    .merit-icon img {
+        width: 65px;
+        height: 65px;
+    }
+    
+    .requirements {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .rank-header {
+        padding: 18px 20px;
+    }
+    
+    .rank-name {
+        font-size: 18px;
+    }
+    
+    .requirements {
+        font-size: 14.5px;
+        line-height: 1.6;
+    }
+}
+
+/* Smooth scroll for better UX */
+html {
+    scroll-behavior: smooth;
+}

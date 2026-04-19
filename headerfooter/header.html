@@ -3,8 +3,31 @@
     <nav class="sidebar-nav">
         <a href="../index/index.html" data-page="home">Home</a>
         <a href="../index/about.html" data-page="about">About Us</a>
-        <a href="../index/resources.html" data-page="resources">Resources</a>
-        <a href="../index/leadership.html" data-page="leadership">Leadership</a>
+        
+        <!-- RESOURCES - Indented buttons -->
+        <a href="../index/reldocs.html" class="sidebar-subitem">• Relevant Documents</a>
+        <a href="../index/merbad.html" class="sidebar-subitem">• Merit Badges</a>
+        <a href="../index/ssadv.html" class="sidebar-subitem">• Senior Scout Advancement</a>
+        
+        <!-- LEADERSHIP - Indented buttons -->
+        <a href="../index/leadership.html" class="sidebar-subitem">• Chain of Command</a>
+        <a href="../index/positions.html" class="sidebar-subitem">• Positions</a>
+        <a href="../index/fback.html" class="sidebar-subitem">• Feedback</a>
+        
+        <a href="../index/shop.html" data-page="shop">Shop</a>
+    </nav>
+</div>
+        
+        <!-- LEADERSHIP DROPDOWN IN SIDEBAR -->
+        <div class="sidebar-dropdown">
+            <a href="#" class="dropdown-toggle">Leadership</a>
+            <div class="dropdown-menu">
+                <a href="../index/leadership.html">Chain of Command</a>
+                <a href="../index/positions.html">Positions</a>
+                <a href="../index/fback.html">Feedback</a>
+            </div>
+        </div>
+        
         <a href="../index/shop.html" data-page="shop">Shop</a>
     </nav>
 </div>
@@ -25,8 +48,27 @@
                 <nav class="nav-buttons">
                     <a href="../index/index.html" class="nav-btn" data-page="home">Home</a>
                     <a href="../index/about.html" class="nav-btn" data-page="about">About Us</a>
-                    <a href="../index/resources.html" class="nav-btn" data-page="resources">Resources</a>
-                    <a href="../index/leadership.html" class="nav-btn" data-page="leadership">Leadership</a>
+                    
+                    <!-- RESOURCES DROPDOWN -->
+                    <div class="dropdown">
+                        <a href="#" class="nav-btn dropdown-toggle" data-dropdown="resources">Resources <span class="dropdown-arrow">▼</span></a>
+                        <div class="dropdown-menu">
+                            <a href="../index/reldocs.html" class="dropdown-item">Relevant Documents</a>
+                            <a href="../index/merbad.html" class="dropdown-item">Merit Badges</a>
+                            <a href="../index/ssadv.html" class="dropdown-item">Senior Scout Advancement</a>
+                        </div>
+                    </div>
+                    
+                    <!-- LEADERSHIP DROPDOWN -->
+                    <div class="dropdown">
+                        <a href="#" class="nav-btn dropdown-toggle" data-dropdown="leadership">Leadership <span class="dropdown-arrow">▼</span></a>
+                        <div class="dropdown-menu">
+                            <a href="../index/leadership.html" class="dropdown-item">Chain of Command</a>
+                            <a href="../index/positions.html" class="dropdown-item">Positions</a>
+                            <a href="../index/fback.html" class="dropdown-item">Feedback</a>
+                        </div>
+                    </div>
+                    
                     <a href="../index/shop.html" class="nav-btn" data-page="shop">Shop</a>
                 </nav>
             </div>
@@ -60,3 +102,6 @@
         <p>"On my honor, I will do my best."</p>
     </div>
 </header>
+
+<!-- Include the JavaScript -->
+<script src="header.js"></script>

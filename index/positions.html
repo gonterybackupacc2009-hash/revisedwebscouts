@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MNCHS Senior Scouting - Positions</title>
+    <link rel="icon" type="image/x-icon" href="/images/org-logo.png">
+    <link rel="stylesheet" href="positions.css">
+    <link rel="stylesheet" href="../headerfooter/headerfooter.css">
+</head>
+<body>
+    
+    <div class="overlay" id="overlay"></div>
+    <!-- HEADER WILL BE LOADED HERE -->
+    <div id="header-placeholder"></div>
+
+    <main>
+        
+        <section class="positions-section">
+            
+            <div class="container">
+                <div class="positions-grid">
+                    <div class="position-card" data-position="senior-crew-leader">
+                        <div class="position-header">
+                            <h2 class="position-title">Senior Crew Leader</h2>
+                            <div class="position-icon"></div>
+                        </div>
+                        <p class="position-description">
+                            The Senior Crew Leader is the highest position in the Outfit, this position serves as the command center of the whole outfit. The Senior Crew Leader oversees all logistical, administrative, and community service duties assisted by their assistant.
+                        </p>
+                    </div>
+
+                    <div class="position-card" data-position="assistant-senior">
+                        <div class="position-header">
+                            <h2 class="position-title">Assistant Senior Crew Leader</h2>
+                            <div class="position-icon"></div>
+                        </div>
+                        <p class="position-description">
+                            The Assistant Senior Crew Leader is the second-in-command of the whole outfit. They serve as the advisors to the Senior Crew Leader and assist them in outfit management. The Assistant Senior Crew Leader handles all field-related issues first before the Senior Crew Leader.
+                        </p>
+                    </div>
+
+                    <div class="position-card" data-position="scribe">
+                        <div class="position-header">
+                            <h2 class="position-title">Scribe</h2>
+                            <div class="position-icon"></div>
+                        </div>
+                        <p class="position-description">
+                            The Scribe is the secretariat of the Outfit, all logistical and administrative documents go through the Scribe and their department. All records of the outfit belong to the Scribe's department.
+                        </p>
+                    </div>
+
+                    <div class="position-card" data-position="treasurer">
+                        <div class="position-header">
+                            <h2 class="position-title">Treasurer</h2>
+                            <div class="position-icon"></div>
+                        </div>
+                        <p class="position-description">
+                            The Treasurer is in charge of handling organization funds and releasing financial statement reports monthly and every after activity or event. All currency-related queries go through the department of the Treasurer.
+                        </p>
+                    </div>
+
+                    <div class="position-card" data-position="quartermaster">
+                        <div class="position-header">
+                            <h2 class="position-title">Quartermaster</h2>
+                            <div class="position-icon"></div>
+                        </div>
+                        <p class="position-description">
+                            The Quartermaster is in charge of the organization and housekeeping of property of the Outfit. All tangible products and properties are under the responsibility of the Outfit quartermaster.
+                        </p>
+                    </div>
+
+                    <div class="position-card" data-position="progsman">
+                        <div class="position-header">
+                            <h2 class="position-title">Progsman</h2>
+                            <div class="position-icon"></div>
+                        </div>
+                        <p class="position-description">
+                            The Progsman (Programsman) is in charge of drafting activities for the Outfit, this includes clean-ups, community services, church services, etc.
+                        </p>
+                    </div>
+
+                    <div class="position-card" data-position="vocational">
+                        <div class="position-header">
+                            <h2 class="position-title">Vocational</h2>
+                            <div class="position-icon"></div>
+                        </div>
+                        <p class="position-description">
+                            The Vocational is in charge of uplifting the spirits of Scouts within the Outfit, as well as being the lead in training newcomers into the Outfit.
+                        </p>
+                    </div>
+
+                    <div class="position-card" data-position="service">
+                        <div class="position-header">
+                            <h2 class="position-title">Service</h2>
+                            <div class="position-icon"></div>
+                        </div>
+                        <p class="position-description">
+                            The Service acts as the left hand man of every Staff position, they are in charge of the minor housekeeping and assisting each Staff personnel in any way they can.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Your existing scripts remain unchanged -->
+    <script>
+        // Load Header (includes sidebar!) & Footer
+        fetch('../headerfooter/header.html')
+            .then(r => r.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                initNavigation();
+            });
+
+        fetch('../headerfooter/footer.html')
+            .then(r => r.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
+        // UNIVERSAL NAVIGATION (your existing code)
+        function setActiveNav() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const pageMap = {
+                'index.html': 'home',
+                'about.html': 'about',
+                'resources.html': 'resources',
+                'positions.html': 'positions',
+                'history.html': 'history',
+                'shop.html': 'shop'
+            };
+            const currentDataPage = pageMap[currentPage] || 'home';
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.page === currentDataPage) btn.classList.add('active');
+            });
+
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === currentDataPage) link.classList.add('active');
+            });
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            const spans = hamburger.querySelectorAll('span');
+            if (sidebar.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                document.body.style.overflow = 'hidden';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
+        function initNavigation() {
+            setActiveNav();
+            document.getElementById('hamburger').onclick = toggleSidebar;
+            document.getElementById('overlay').onclick = toggleSidebar;
+            
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.getElementById('sidebar').classList.remove('active');
+                    document.getElementById('overlay').classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+            
+            window.addEventListener('popstate', setActiveNav);
+        }
+
+        window.addEventListener('load', () => setTimeout(initNavigation, 100));
+    </script>
+</body>
+</html>
