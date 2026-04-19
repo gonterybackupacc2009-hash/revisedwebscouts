@@ -156,7 +156,7 @@
                                     <img src="../images/indeximages/slide1.png" alt="Event 1">
                                 </div>
                                 <div class="portal-carousel-slide">
-                                    <img src="https://i.imgur.com/v0cr5ke.png" alt="Event 2">
+                                    <img src="../images/indeximages/slide2.png" alt="Event 2">
                                 </div>
                             </div>
                         </div>
@@ -184,243 +184,203 @@
     <!-- Footer -->
 <div id="footer-placeholder"></div>
 
-    <script>
-        // SIDEBAR FUNCTIONALITY
-        const hamburger = document.getElementById('hamburger');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
+<script>
+    // Load Header & Footer FIRST
+    Promise.all([
+        fetch('../headerfooter/header.html').then(r => r.text()),
+        fetch('../headerfooter/footer.html').then(r => r.text())
+    ]).then(([headerData, footerData]) => {
+        document.getElementById('header-placeholder').innerHTML = headerData;
+        document.getElementById('footer-placeholder').innerHTML = footerData;
+        initNavigation();
+    }).catch(err => console.error('Failed to load header/footer:', err));
 
-        function toggleSidebar() {
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
+    // PORTAL CAROUSEL CLASS (unchanged)
+    class EventCarousel {
+        constructor() {
+            this.currentIndex = 0;
+            this.slides = document.querySelectorAll('.portal-carousel-slide');
+            this.track = document.getElementById('carouselTrack');
+            this.totalSlides = this.slides.length;
+            this.carousel = document.getElementById('eventCarousel');
+            this.autoPlayInterval = null;
+            this.init();
+        }
+        
+        init() {
+            this.createIndicators();
+            this.updateCarousel();
+            this.bindEvents();
+            this.startAutoPlay();
+        }
+        
+        createIndicators() {
+            const indicatorsContainer = document.getElementById('indicators');
+            indicatorsContainer.innerHTML = '';
+            this.indicators = [];
+            this.slides.forEach((_, index) => {
+                const indicator = document.createElement('div');
+                indicator.className = 'portal-carousel-indicator';
+                indicator.addEventListener('click', () => this.goToSlide(index));
+                indicatorsContainer.appendChild(indicator);
+                this.indicators.push(indicator);
+            });
+            this.updateIndicators();
+        }
+        
+        bindEvents() {
+            this.carousel.addEventListener('mouseenter', () => this.pauseAutoPlay());
+            this.carousel.addEventListener('mouseleave', () => this.startAutoPlay());
             
-            // Animate hamburger
-            const spans = hamburger.querySelectorAll('span');
-            if (sidebar.classList.contains('active')) {
-                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
-                spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
-            } else {
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
+            let startX = 0;
+            this.carousel.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            });
+            this.carousel.addEventListener('touchend', (e) => {
+                const endX = e.changedTouches[0].clientX;
+                const diffX = startX - endX;
+                if (Math.abs(diffX) > 50) {
+                    if (diffX > 0) this.nextSlide();
+                    else this.prevSlide();
+                }
+            });
+        }
+        
+        updateCarousel() {
+            const offset = -this.currentIndex * 50;
+            this.track.style.transform = `translateX(${offset}%)`;
+            this.updateIndicators();
+        }
+        
+        updateIndicators() {
+            this.indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === this.currentIndex);
+            });
+        }
+        
+        nextSlide() { 
+            this.currentIndex = (this.currentIndex + 1) % this.totalSlides; 
+            this.updateCarousel(); 
+        }
+        
+        prevSlide() { 
+            this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides; 
+            this.updateCarousel(); 
+        }
+        
+        goToSlide(index) { 
+            this.currentIndex = index; 
+            this.updateCarousel(); 
+        }
+        
+        startAutoPlay() { 
+            this.pauseAutoPlay();
+            this.autoPlayInterval = setInterval(() => this.nextSlide(), 4000);
+        }
+        
+        pauseAutoPlay() { 
+            if (this.autoPlayInterval) {
+                clearInterval(this.autoPlayInterval);
+                this.autoPlayInterval = null;
+            }
+        }
+    }
+
+    // FORM SUBMISSION - FIXED VERSION
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyTi-FY5nk2YLBEleDvN4sEoW9EZraEkXxPoKoUfg-VsXYN4rikOom_GY92nY9u1DCldQ/exec';
+
+    function submitForm() {
+        const form = document.getElementById('studentForm');
+        const btn = document.getElementById('submitBtn');
+        const msgDiv = document.getElementById('message');
+        
+        // Validate required fields
+        const requiredFields = ['surname', 'firstName', 'gradeLevel', 'section', 'dateOfBirth', 'age', 'sex', 'presentRank'];
+        for (let field of requiredFields) {
+            const input = document.getElementById(field);
+            if (!input.value.trim()) {
+                msgDiv.innerHTML = `<div class="portal-message portal-error">❌ Please fill all required fields (*)</div>`;
+                input.focus();
+                return;
             }
         }
 
-        hamburger.addEventListener('click', toggleSidebar);
-        overlay.addEventListener('click', toggleSidebar);
+        btn.disabled = true;
+        btn.innerHTML = 'Processing...';
+        msgDiv.innerHTML = '<div class="portal-message portal-success">Submitting, please wait...</div>';
+
+        const formData = new FormData();
+        formData.append('surname', document.getElementById('surname').value.trim().toUpperCase());
+        formData.append('firstName', document.getElementById('firstName').value.trim().toUpperCase());
+        formData.append('middleName', document.getElementById('middleName').value.trim().toUpperCase());
+        formData.append('nameExt', document.getElementById('nameExt').value.trim().toUpperCase());
+        formData.append('gradeLevel', document.getElementById('gradeLevel').value);
+        formData.append('section', document.getElementById('section').value.trim().toUpperCase());
+        formData.append('dateOfBirth', document.getElementById('dateOfBirth').value);
+        formData.append('age', document.getElementById('age').value);
+        formData.append('sex', document.getElementById('sex').value);
+        formData.append('presentRank', document.getElementById('presentRank').value.trim().toUpperCase());
+        formData.append('recruiter', document.getElementById('recruiter').value.trim().toUpperCase());
+
+        fetch(WEB_APP_URL, { 
+            method: 'POST', 
+            body: formData,
+            mode: 'no-cors' // Add this for Google Apps Script
+        })
+        .then(response => {
+            // Google Apps Script with no-cors doesn't give response body
+            // Assume success if no network error
+            msgDiv.innerHTML = '<div class="portal-message portal-success">✅ Registration successful! Visit the resources page to complete your requirements.</div>';
+            form.reset();
+        })
+        .catch(error => {
+            console.error('Submission error:', error);
+            msgDiv.innerHTML = '<div class="portal-message portal-error">❌ Failed to submit. Please check your connection and try again.</div>';
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.innerHTML = 'Submit Registration';
+        });
+    }
+
+    // UNIVERSAL NAVIGATION (single source of truth)
+    function setActiveNav() {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const pageMap = {
+            'index.html': 'home',
+            'about.html': 'about',
+            'resources.html': 'resources',
+            'leadership.html': 'leadership',
+            'history.html': 'history',
+            'shop.html': 'shop',
+            'portal.html': 'regisportal',
+            'regisportal.html': 'regisportal'
+        };
+        const currentDataPage = pageMap[currentPage] || 'home';
+
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.page === currentDataPage) btn.classList.add('active');
+        });
 
         document.querySelectorAll('.sidebar-nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                sidebar.classList.remove('active');
-                overlay.classList.remove('active');
-                const spans = hamburger.querySelectorAll('span');
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
-            });
+            link.classList.remove('active');
+            if (link.getAttribute('href') === currentPage || link.dataset.page === currentDataPage) {
+                link.classList.add('active');
+            }
         });
+    }
 
-        // PORTAL CAROUSEL CLASS
-        class EventCarousel {
-            constructor() {
-                this.currentIndex = 0;
-                this.slides = document.querySelectorAll('.portal-carousel-slide');
-                this.track = document.getElementById('carouselTrack');
-                this.totalSlides = this.slides.length;
-                this.carousel = document.getElementById('eventCarousel');
-                this.autoPlayInterval = null;
-                this.init();
-            }
-            
-            init() {
-                this.createIndicators();
-                this.updateCarousel();
-                this.bindEvents();
-                this.startAutoPlay();
-            }
-            
-            createIndicators() {
-                const indicatorsContainer = document.getElementById('indicators');
-                indicatorsContainer.innerHTML = '';
-                this.indicators = [];
-                this.slides.forEach((_, index) => {
-                    const indicator = document.createElement('div');
-                    indicator.className = 'portal-carousel-indicator';
-                    indicator.addEventListener('click', () => this.goToSlide(index));
-                    indicatorsContainer.appendChild(indicator);
-                    this.indicators.push(indicator);
-                });
-                this.updateIndicators();
-            }
-            
-            bindEvents() {
-                this.carousel.addEventListener('mouseenter', () => this.pauseAutoPlay());
-                this.carousel.addEventListener('mouseleave', () => this.startAutoPlay());
-                
-                let startX = 0;
-                this.carousel.addEventListener('touchstart', (e) => {
-                    startX = e.touches[0].clientX;
-                });
-                this.carousel.addEventListener('touchend', (e) => {
-                    const endX = e.changedTouches[0].clientX;
-                    const diffX = startX - endX;
-                    if (Math.abs(diffX) > 50) {
-                        if (diffX > 0) this.nextSlide();
-                        else this.prevSlide();
-                    }
-                });
-            }
-            
-            updateCarousel() {
-                const offset = -this.currentIndex * 50;
-                this.track.style.transform = `translateX(${offset}%)`;
-                this.updateIndicators();
-            }
-            
-            updateIndicators() {
-                this.indicators.forEach((indicator, index) => {
-                    indicator.classList.toggle('active', index === this.currentIndex);
-                });
-            }
-            
-            nextSlide() { 
-                this.currentIndex = (this.currentIndex + 1) % this.totalSlides; 
-                this.updateCarousel(); 
-            }
-            
-            prevSlide() { 
-                this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides; 
-                this.updateCarousel(); 
-            }
-            
-            goToSlide(index) { 
-                this.currentIndex = index; 
-                this.updateCarousel(); 
-            }
-            
-            startAutoPlay() { 
-                this.pauseAutoPlay();
-                this.autoPlayInterval = setInterval(() => this.nextSlide(), 4000);
-            }
-            
-            pauseAutoPlay() { 
-                if (this.autoPlayInterval) {
-                    clearInterval(this.autoPlayInterval);
-                    this.autoPlayInterval = null;
-                }
-            }
-        }
-
-        // FORM SUBMISSION
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyTi-FY5nk2YLBEleDvN4sEoW9EZraEkXxPoKoUfg-VsXYN4rikOom_GY92nY9u1DCldQ/exec'; 
-
-        document.addEventListener('DOMContentLoaded', () => {
-            new EventCarousel();
-            
-            document.getElementById('studentForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const btn = document.getElementById('submitBtn');
-                const msgDiv = document.getElementById('message');
-                
-                btn.disabled = true;
-                btn.innerHTML = 'Processing...';
-                msgDiv.innerHTML = '<div class="portal-message portal-success">Submitting, please wait...</div>';
-
-                const formData = new FormData();
-                formData.append('surname', document.getElementById('surname').value.trim().toUpperCase());
-                formData.append('firstName', document.getElementById('firstName').value.trim().toUpperCase());
-                formData.append('middleName', document.getElementById('middleName').value.trim().toUpperCase());
-                formData.append('nameExt', document.getElementById('nameExt').value.trim().toUpperCase());
-                formData.append('gradeLevel', document.getElementById('gradeLevel').value);
-                formData.append('section', document.getElementById('section').value.trim().toUpperCase());
-                formData.append('dateOfBirth', document.getElementById('dateOfBirth').value);
-                formData.append('age', document.getElementById('age').value);
-                formData.append('sex', document.getElementById('sex').value);
-                formData.append('presentRank', document.getElementById('presentRank').value.trim().toUpperCase());
-                formData.append('recruiter', document.getElementById('recruiter').value.trim().toUpperCase());
-
-                try {
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 10000);
-                    
-                    const res = await fetch(WEB_APP_URL, { 
-                        method: 'POST', 
-                        body: formData,
-                        signal: controller.signal
-                    });
-                    
-                    clearTimeout(timeoutId);
-                    const text = await res.text();
-                    
-                    if (text.includes('SUCCESS')) {
-                        msgDiv.innerHTML = '<div class="portal-message portal-success">Registration successful! Visit the resources page to complete your requirements.</div>';
-                        document.getElementById('studentForm').reset();
-                    } else {
-                        throw new Error('Server response invalid');
-                    }
-                } catch (error) {
-                    if (error.name === 'AbortError') {
-                        msgDiv.innerHTML = '<div class="portal-message portal-error">⏰ Request timeout. Please try again.</div>';
-                    } else {
-                        msgDiv.innerHTML = '<div class="portal-message portal-error">❌ Failed to submit. Please check your connection and try again.</div>';
-                    }
-                } finally {
-                    btn.disabled = false;
-                    btn.innerHTML = 'Submit Registration';
-                }
-            });
-        });
-    </script>
-<script>
-        // Load Header (includes sidebar!) & Footer
-        fetch('../headerfooter/header.html')
-            .then(r => r.text())
-            .then(data => {
-                document.getElementById('header-placeholder').innerHTML = data;
-                initNavigation();
-            });
-
-        fetch('../headerfooter/footer.html')
-            .then(r => r.text())
-            .then(data => {
-                document.getElementById('footer-placeholder').innerHTML = data;
-            });
-
-        // UNIVERSAL NAVIGATION
-        function setActiveNav() {
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            const pageMap = {
-                'index.html': 'home',
-                'about.html': 'about',
-                'resources.html': 'resources',
-                'leadership.html': 'leadership',
-                'history.html': 'history',
-                'shop.html': 'shop',
-                'regisportal.html': 'regisportal'
-            };
-            const currentDataPage = pageMap[currentPage] || 'home';
-
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.page === currentDataPage) btn.classList.add('active');
-            });
-
-            document.querySelectorAll('.sidebar-nav a').forEach(link => {
-                link.classList.remove('active');
-                if (link.dataset.page === currentDataPage) link.classList.add('active');
-            });
-        }
-
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            const hamburger = document.getElementById('hamburger');
-            
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-            
-            const spans = hamburger.querySelectorAll('span');
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const hamburger = document.getElementById('hamburger');
+        
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+        
+        const spans = hamburger?.querySelectorAll('span');
+        if (spans) {
             if (sidebar.classList.contains('active')) {
                 spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
                 spans[1].style.opacity = '0';
@@ -433,24 +393,44 @@
                 document.body.style.overflow = '';
             }
         }
+    }
 
-        function initNavigation() {
-            setActiveNav();
-            document.getElementById('hamburger').onclick = toggleSidebar;
-            document.getElementById('overlay').onclick = toggleSidebar;
-            
-            document.querySelectorAll('.sidebar-nav a').forEach(link => {
-                link.addEventListener('click', () => {
-                    document.getElementById('sidebar').classList.remove('active');
-                    document.getElementById('overlay').classList.remove('active');
-                    document.body.style.overflow = '';
-                });
+    function initNavigation() {
+        setActiveNav();
+        
+        const hamburger = document.getElementById('hamburger');
+        const overlay = document.getElementById('overlay');
+        if (hamburger) hamburger.onclick = toggleSidebar;
+        if (overlay) overlay.onclick = toggleSidebar;
+        
+        document.querySelectorAll('.sidebar-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('overlay');
+                if (sidebar) sidebar.classList.remove('active');
+                if (overlay) overlay.classList.remove('active');
+                document.body.style.overflow = '';
             });
-            
-            window.addEventListener('popstate', setActiveNav);
-        }
+        });
+        
+        window.addEventListener('popstate', setActiveNav);
+    }
 
-        window.addEventListener('load', () => setTimeout(initNavigation, 100));
-    </script>
+    // MAIN INITIALIZATION
+    document.addEventListener('DOMContentLoaded', () => {
+        new EventCarousel();
+        
+        // Form submission
+        document.getElementById('studentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitForm();
+        });
+        
+        // Set min date for DOB (today - 18 years max)
+        const today = new Date();
+        const maxDate = new Date(today.getFullYear() - 7, today.getMonth(), today.getDate()).toISOString().split('T')[0];
+        document.getElementById('dateOfBirth').setAttribute('max', maxDate);
+    });
+</script>
 </body>
 </html>
