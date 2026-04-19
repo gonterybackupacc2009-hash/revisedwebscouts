@@ -102,6 +102,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin-top: 25%;
 }
 
 .sidebar-nav a {
@@ -173,14 +174,19 @@ body {
     color: #333;
     white-space: nowrap;
     position: relative;
+    border-bottom: solid #ffffff;
+    transition: all 0.4s;
 }
 
 .nav-btn:hover {
     background-color: #eeeeee;
+    border-bottom: solid 3px #010160;
 }
 
 .nav-btn.active {
     background-color: #cbcbcb !important;
+    border-bottom: 0px !important;
+    
 }
 
 .nav-btn.active::after {
@@ -213,6 +219,7 @@ body {
     text-decoration: none !important;
     font-size: 14px;
     white-space: nowrap;
+    transition: all 0.4s;
 }
 
 .login-btn:hover {
