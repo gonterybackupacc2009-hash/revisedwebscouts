@@ -491,10 +491,9 @@
         }
 
         @media (max-width: 480px) {
-            body {
-                padding: 5px 0;
+              body {
+                padding: 85px 0;
             }
-            
 
             .sidebar {
                 width: 260px;
