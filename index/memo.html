@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MNCHS Senior Scouting</title>
+    <link rel="icon" type="image/x-icon" href="/images/org-logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="memo.css">
+<link rel="stylesheet" href="../headerfooter/headerfooter.css">
+</head>
+<body>
+
+    <div class="overlay" id="overlay"></div>
+
+<!-- HEADER WILL BE LOADED HERE -->
+<div id="header-placeholder"></div>
+
+    <main class="main-content">
+
+                <div class="updates-header">
+                    <h2>Memorandums</h2>
+                </div>
+        <section class="updates-row">
+            <section class="updates-section">
+            <div class="updates-grid">
+                <div class="update-item">
+                         <img src="../images/indeximages/newlogo.png" alt="Update 1" class="update-image">
+                    <div class="update-content">
+                        <div class="update-date">April 19, 2026</div>
+                        <a href="../memos/ResultsBOR_March_24_2026.pdf" target="_blank" class="update-title-link" style="text-decoration: none;">
+                        <div class="update-title">➤ March 24 BOR Results</div>
+                        </a>
+                        <div class="update-description">
+                            The results for the Board of Review for <strong>EXPLORER, PATHFINDER, and OUTDOOR SCOUTS</strong> held on March 24, 2026 at the MNCHS Centennial Auditorium. Click for more information.
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+<!-- FOOTER WILL BE LOADED HERE -->
+<div id="footer-placeholder"></div>
+
+    <script>
+        function updatePhilippinesTime() {
+            const now = new Date();
+            
+            // Get Philippines time (UTC+8)
+            const phTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Manila"}));
+            
+            // Format time
+            const timeString = phTime.toLocaleTimeString("en-US", {
+                hour12: true,  // 24-hour format
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+            });
+            
+            document.getElementById("phTime").textContent = timeString;
+        }
+        
+        // Update time immediately and every second
+        updatePhilippinesTime();
+        setInterval(updatePhilippinesTime, 1000);
+        function setActiveNav() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const pageMap = {
+                'index.html': 'home',
+                'about.html': 'about',
+                'resources.html': 'resources',
+                'leadership.html': 'leadership',
+                'history.html': 'history'
+            };
+            const currentDataPage = pageMap[currentPage] || 'home';
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.page === currentDataPage) {
+                    btn.classList.add('active');
+                }
+            });
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === currentDataPage) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            const spans = hamburger.querySelectorAll('span');
+            if (sidebar.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        }
+
+        hamburger.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
+        document.querySelectorAll('.sidebar-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+                const spans = hamburger.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+
+        setActiveNav();
+        window.addEventListener('popstate', setActiveNav);
+
+        let currentSlideIndex = 0;
+        const totalSlides = 3;
+
+        function showSlide(index) {
+            const images = document.getElementById('carouselImages');
+            const dots = document.querySelectorAll('.dot');
+            currentSlideIndex = (index + totalSlides) % totalSlides;
+            images.style.transform = `translateX(-${currentSlideIndex * 33.333}%)`;
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[currentSlideIndex].classList.add('active');
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlideIndex + direction);
+        }
+
+        function currentSlide(index) {
+            showSlide(index - 1);
+        }
+
+        setInterval(() => {
+            changeSlide(1);
+        }, 4000);
+
+        let startX = 0;
+        let endX = 0;
+        const carouselContainer = document.querySelector('.carousel-container');
+        
+        carouselContainer.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+        
+        carouselContainer.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const threshold = 50;
+            if (startX - endX > threshold) {
+                changeSlide(1);
+            } else if (endX - startX > threshold) {
+                changeSlide(-1);
+            }
+        }
+
+        sidebar.addEventListener('transitionend', function() {
+            if (sidebar.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.6s ease';
+            document.body.style.opacity = '1';
+        });
+    </script>
+<script>
+        // Load Header (includes sidebar!) & Footer
+        fetch('../headerfooter/header.html')
+            .then(r => r.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                initNavigation();
+            });
+
+        fetch('../headerfooter/footer.html')
+            .then(r => r.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
+        // UNIVERSAL NAVIGATION
+        function setActiveNav() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const pageMap = {
+                'index.html': 'home',
+                'about.html': 'about',
+                'resources.html': 'resources',
+                'leadership.html': 'leadership',
+                'history.html': 'history',
+                'shop.html': 'shop'
+            };
+            const currentDataPage = pageMap[currentPage] || 'home';
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.page === currentDataPage) btn.classList.add('active');
+            });
+
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === currentDataPage) link.classList.add('active');
+            });
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            const spans = hamburger.querySelectorAll('span');
+            if (sidebar.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                document.body.style.overflow = 'hidden';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
+        function initNavigation() {
+            setActiveNav();
+            document.getElementById('hamburger').onclick = toggleSidebar;
+            document.getElementById('overlay').onclick = toggleSidebar;
+            
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.getElementById('sidebar').classList.remove('active');
+                    document.getElementById('overlay').classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+            
+            window.addEventListener('popstate', setActiveNav);
+        }
+
+        window.addEventListener('load', () => setTimeout(initNavigation, 100));
+    </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+function loadPDFPreview(pdfUrl, imgElement) {
+    pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+        pdf.getPage(1).then(page => {
+            const scale = 0.5;
+            const viewport = page.getViewport({scale});
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            
+            page.render({
+                canvasContext: context,
+                viewport: viewport
+            }).promise.then(() => {
+                imgElement.src = canvas.toDataURL();
+            });
+        });
+    });
+}
+
+// Load preview when page loads
+window.addEventListener('load', () => {
+    const previewImg = document.querySelector('.update-image');
+    loadPDFPreview('../memos/ResultsBOR_March_24_2026.pdf', previewImg);
+});
+</script>
+</body>
+</html>
