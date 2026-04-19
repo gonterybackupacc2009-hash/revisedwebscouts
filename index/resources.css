@@ -792,3 +792,63 @@
             padding: 20px;
         }
     }
+
+    /* ===== MODAL FIX - ADD THIS AT THE VERY END ===== */
+.modal {
+    display: none !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0,0,0,0.8) !important;
+    z-index: 99999 !important;  /* HIGHEST Z-INDEX */
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: all 0.3s ease !important;
+    align-items: center !important;
+    justify-content: center !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+.modal.active {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Ensure modal content is always on top */
+.modal-content {
+    position: relative !important;
+    z-index: 100000 !important;
+    max-width: 650px !important;
+    max-height: 90vh !important;
+    width: 90% !important;
+    background: white !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.6) !important;
+    transform: scale(1) !important;
+    animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+@keyframes modalPop {
+    0% { transform: scale(0.7) translateY(-30px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Fix clickable items hover */
+.clickable-item:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 30px rgba(25, 118, 210, 0.3) !important;
+}
+
+/* Mobile fix */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95% !important;
+        margin: 10px !important;
+    }
+}
+.modal { display: none !important; position: fixed !important; inset: 0 !important; background: rgba(0,0,0,0.9) !important; z-index: 999999 !important; }
+.modal.active { display: flex !important; }

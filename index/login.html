@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MNCHS Senior Scouting</title>
+    <link rel="icon" type="image/x-icon" href="/images/org-logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+<link rel="stylesheet" href="../headerfooter/headerfooter.css">
+
+</head>
+<body>
+
+    <div class="overlay" id="overlay"></div>
+    <div id="header-placeholder"></div>
+
+    <!-- NEW LOGIN PANEL -->
+    <main class="main-content">
+        <div class="login-panel">
+            <h1>Staff Login</h1>
+            <p class="subtitle">Members of the Outfit Staff Team only.</p>
+            
+            <div id="errorMsg" class="error"></div>
+            <div id="successMsg" class="success">Access granted! Proceed to Scout Registration System.</div>
+            
+            <div id="formSection" class="form-section">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Email Address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                    </div>
+                    
+                    <button type="submit" class="login-btnpanel">Login</button>
+                </form>
+                
+            </div>
+            
+            <div id="accessSection" class="access-section">
+                <a href="regisportal.html" 
+                   class="access-btn" >
+                   Open Scout Registration System
+                </a>
+            </div>
+        </div>
+    </main>
+
+<div id="footer-placeholder"></div>
+
+    <script>
+        // SIDEBAR FUNCTIONALITY (unchanged)
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            const spans = hamburger.querySelectorAll('span');
+            if (sidebar.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        }
+
+        hamburger.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+        document.querySelectorAll('.sidebar-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+                const spans = hamburger.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+
+        // 🔥 NEW EASY-TO-MANAGE USER ACCOUNTS SYSTEM
+        const userAccounts = {
+            // 👇 ADD NEW USERS HERE - Just follow the format: 'email': 'password'
+            'viancadejesus804@gmail.com': 'scout2024vian',
+            'gonterybackupacc2009@gmail.com': 'backupgon2024',
+            'kiel.clores26@gmail.com': 'kielscout002',
+            
+            // 📝 ADD MORE USERS LIKE THIS:
+            // 'newemail@example.com': 'newpassword123',
+            // 'another@scout.com': 'securepass456',
+        };
+
+        // LOGIN FUNCTIONALITY
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const loginForm = document.getElementById('loginForm');
+        const formSection = document.getElementById('formSection');
+        const accessSection = document.getElementById('accessSection');
+        const errorMsg = document.getElementById('errorMsg');
+        const successMsg = document.getElementById('successMsg');
+        const headerLoginBtn = document.getElementById('headerLoginBtn');
+
+        // Real-time email validation
+        emailInput.addEventListener('input', function() {
+            const email = this.value.trim().toLowerCase();
+            if (userAccounts.hasOwnProperty(email)) {
+                this.classList.add('valid-email');
+                this.classList.remove('invalid-email');
+            } else if (email) {
+                this.classList.add('invalid-email');
+                this.classList.remove('valid-email');
+            } else {
+                this.classList.remove('valid-email', 'invalid-email');
+            }
+        });
+
+        // Form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = emailInput.value.trim().toLowerCase();
+            const password = passwordInput.value;
+            
+            // Reset messages
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'none';
+            
+            // Check if email exists
+            if (!userAccounts.hasOwnProperty(email)) {
+                showError('Email not authorized. Contact administrator.');
+                emailInput.classList.add('invalid-email');
+                return;
+            }
+            
+            // Check password
+            if (userAccounts[email] !== password) {
+                showError('Incorrect password for this account.');
+                passwordInput.value = '';
+                return;
+            }
+            
+            // SUCCESS!
+            showSuccess(`Welcome! Access granted for ${email}`);
+        });
+
+        // Header login button triggers form submission
+        headerLoginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginForm.dispatchEvent(new Event('submit'));
+        });
+
+        function showError(message) {
+            errorMsg.textContent = message;
+            errorMsg.style.display = 'block';
+            // Scroll to top of form
+            document.querySelector('.login-panel').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showSuccess(message) {
+            successMsg.textContent = message;
+            successMsg.style.display = 'block';
+            formSection.style.display = 'none';
+            accessSection.style.display = 'block';
+            // Scroll to top
+            document.querySelector('.login-panel').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Enter key support
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && (e.target === emailInput || e.target === passwordInput)) {
+                loginForm.dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // 🎉 CONSOLE INFO FOR ADMINS
+        console.log('%c👨‍💼 ADMIN INFO:', 'color: #1976D2; font-size: 16px; font-weight: bold;');
+        console.log('📧 Authorized Emails & Passwords:');
+        Object.entries(userAccounts).forEach(([email, pass]) => {
+            console.log(`  ${email}: ${pass}`);
+        });
+        console.log('\n✏️ To add new users: Edit the "userAccounts" object above');
+    </script>
+<script>
+        // Load Header (includes sidebar!) & Footer
+        fetch('../headerfooter/header.html')
+            .then(r => r.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                initNavigation();
+            });
+
+        fetch('../headerfooter/footer.html')
+            .then(r => r.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
+        // UNIVERSAL NAVIGATION
+        function setActiveNav() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const pageMap = {
+                'index.html': 'home',
+                'about.html': 'about',
+                'resources.html': 'resources',
+                'leadership.html': 'leadership',
+                'history.html': 'history',
+                'shop.html': 'shop',
+                'login.html': 'login'
+            };
+            const currentDataPage = pageMap[currentPage] || 'home';
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.page === currentDataPage) btn.classList.add('active');
+            });
+
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === currentDataPage) link.classList.add('active');
+            });
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            const spans = hamburger.querySelectorAll('span');
+            if (sidebar.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                document.body.style.overflow = 'hidden';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
+        function initNavigation() {
+            setActiveNav();
+            document.getElementById('hamburger').onclick = toggleSidebar;
+            document.getElementById('overlay').onclick = toggleSidebar;
+            
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.getElementById('sidebar').classList.remove('active');
+                    document.getElementById('overlay').classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+            
+            window.addEventListener('popstate', setActiveNav);
+        }
+
+        window.addEventListener('load', () => setTimeout(initNavigation, 100));
+    </script>
+</body>
+</html>

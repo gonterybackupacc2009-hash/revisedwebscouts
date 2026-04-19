@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MNCHS Senior Scouting</title>
+    <link rel="icon" type="image/x-icon" href="../images/org-logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+    <link rel="stylesheet" href="regisportal.css">
+    <link rel="stylesheet" href="../headerfooter/headerfooter.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <!-- SIDEBAR - MOBILE ONLY -->
+    <div class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="resources.html">Resources</a>
+            <a href="leadership.html">Leadership</a>
+            <a href="history.html">History</a>
+            <a href="portal.html">Portal</a>
+        </nav>
+    </div>
+
+    <!-- OVERLAY -->
+    <div class="overlay" id="overlay"></div>
+    <div id="header-placeholder"></div>
+
+    <!-- PORTAL CONTENT -->
+    <div class="portal-container">
+        <!-- PORTAL HEADER -->
+        <div class="portal-header">
+            <img src="../images/org-logo.png" alt="Left Logo" class="portal-logo">
+            <div class="portal-content">
+                <h1>REGISTRATION FORM</h1>
+                <div class="portal-subtitle">Outfit Membership Registration Form</div>
+            </div>
+            <img src="../images/school-logo.png" alt="Right Logo" class="portal-logo">
+        </div>
+
+        <div class="portal-grid">
+            <!-- LEFT SIDEBAR -->
+            <div class="portal-left">
+                <div class="portal-sidebar-header">NOTICE</div>
+                <div class="portal-notice-item">Input all data in all capital letters. <br><br></div>
+                <div class="portal-notice-item">Only submit this online registration form <strong>ONCE</strong> unless instructed otherwise by a member of Staff.<br><br></div>
+                <div class="portal-notice-item">Once you have accomplished this online registration form, accomplish your <strong>RF-1, RF-2A and RF-2B</strong>. Failure to do so will result in your registration not being finalized.</div>
+            </div>
+
+            <!-- MAIN CONTENT -->
+            <div class="portal-main">
+                <form id="studentForm">
+                    <div class="portal-form-row">
+                        <div>
+                            <label class="portal-label">Surname *</label>
+                            <input type="text" id="surname" class="portal-input" required>
+                        </div>
+                        <div>
+                            <label class="portal-label">First Name *</label>
+                            <input type="text" id="firstName" class="portal-input" required>
+                        </div>
+                    </div>
+
+                    <div class="portal-form-row">
+                        <div>
+                            <label class="portal-label">Middle Name</label>
+                            <input type="text" id="middleName" class="portal-input">
+                        </div>
+                        <div>
+                            <label class="portal-label">Name Extension</label>
+                            <input type="text" id="nameExt" class="portal-input">
+                        </div>
+                    </div>
+
+                    <div class="portal-form-row">
+                        <div>
+                            <label class="portal-label">Grade Level *</label>
+                            <select id="gradeLevel" class="portal-select" required>
+                                <option value="">Select</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                                <option>11</option>
+                                <option>12</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="portal-label">Section *</label>
+                            <input type="text" id="section" class="portal-input" required>
+                        </div>
+                    </div>
+
+                    <div class="portal-form-row">
+                        <div>
+                            <label class="portal-label">Date of Birth *</label>
+                            <input type="date" id="dateOfBirth" class="portal-input" required>
+                        </div>
+                        <div>
+                            <label class="portal-label">Age *</label>
+                            <input type="number" id="age" class="portal-input" required>
+                        </div>
+                    </div>
+
+<!-- Sex & Present Rank Row (2 fields on PC) -->
+<div class="portal-form-row">
+    <div>
+        <label class="portal-label">Sex *</label>
+        <select id="sex" class="portal-select" required>
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+        </select>
+    </div>
+    <div>
+        <label class="portal-label">Present Rank *</label>
+        <select id="presentRank" class="portal-select" required>
+            <option value="">Select</option>
+            <option>Membership</option>
+            <option>Explorer</option>
+            <option>Pathfinder</option>
+            <option>Outdoor Scout</option>
+            <option>Venturer</option>
+            <option>Eagle</option>
+        </select>
+    </div>
+</div>
+
+<!-- Recruiter Row (alone on PC, stacks on mobile) -->
+<div class="portal-form-row">
+    <div>
+        <label class="portal-label">Recruiter</label>
+        <input type="text" id="recruiter" class="portal-input" placeholder="Who encouraged you to join? (Leave blank if none)">
+    </div>
+    <div></div>
+</div>
+
+                    <button type="submit" id="submitBtn" class="portal-button">Submit Registration</button>
+                </form>
+
+                <div id="message"></div>
+
+                <!-- CAROUSEL -->
+                <div class="portal-carousel-container">
+                    <div class="portal-carousel-header">
+                        <h2>SCOUTING EVENTS</h2>
+                        <p>Check out our latest adventures and activities!</p>
+                    </div>
+                    
+                    <div class="portal-carousel-wrapper">
+                        <div class="portal-carousel" id="eventCarousel">
+                            <div class="portal-carousel-track" id="carouselTrack">
+                                <div class="portal-carousel-slide">
+                                    <img src="../images/indeximages/slide1.png" alt="Event 1">
+                                </div>
+                                <div class="portal-carousel-slide">
+                                    <img src="https://i.imgur.com/v0cr5ke.png" alt="Event 2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="portal-carousel-indicators" id="indicators"></div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDEBAR -->
+            <div class="portal-right">
+                <div>
+                    <div class="portal-sidebar-header">SCOUT OATH</div>
+                    <p>On my honor,<br>I will do my best,<br>to do my duty to God and my country,<br>the Republic of the Philippines,<br>and to obey the Scout Law,<br>to help other people at all times,<br>to keep myself physically strong,<br>mentally awake and morally straight.</p>
+                </div>
+
+                <div>
+                    <div class="portal-sidebar-header">SENIOR SCOUT CODE</div>
+                    <p>As a Senior Scout, I will live up the scout oath and law and the senior scout motto and slogan, I will be familiar with the constitution of the Philippines especially my rights and obligation as a Filipino citizen I will share my responsibility to my home, school, church, neighborhood, community, and country. I will deal fairly and kindly with my fellow men in the spirit of the scout law. I will work to preserve our Filipino heritage aware that the privileges I enjoy were won by hardwork clear-thinking and the faith of our forefathers. I will do everything in my power to pass on a better Philippines to the next generation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+<div id="footer-placeholder"></div>
+
+    <script>
+        // SIDEBAR FUNCTIONALITY
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // Animate hamburger
+            const spans = hamburger.querySelectorAll('span');
+            if (sidebar.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        }
+
+        hamburger.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
+        document.querySelectorAll('.sidebar-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+                const spans = hamburger.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+
+        // PORTAL CAROUSEL CLASS
+        class EventCarousel {
+            constructor() {
+                this.currentIndex = 0;
+                this.slides = document.querySelectorAll('.portal-carousel-slide');
+                this.track = document.getElementById('carouselTrack');
+                this.totalSlides = this.slides.length;
+                this.carousel = document.getElementById('eventCarousel');
+                this.autoPlayInterval = null;
+                this.init();
+            }
+            
+            init() {
+                this.createIndicators();
+                this.updateCarousel();
+                this.bindEvents();
+                this.startAutoPlay();
+            }
+            
+            createIndicators() {
+                const indicatorsContainer = document.getElementById('indicators');
+                indicatorsContainer.innerHTML = '';
+                this.indicators = [];
+                this.slides.forEach((_, index) => {
+                    const indicator = document.createElement('div');
+                    indicator.className = 'portal-carousel-indicator';
+                    indicator.addEventListener('click', () => this.goToSlide(index));
+                    indicatorsContainer.appendChild(indicator);
+                    this.indicators.push(indicator);
+                });
+                this.updateIndicators();
+            }
+            
+            bindEvents() {
+                this.carousel.addEventListener('mouseenter', () => this.pauseAutoPlay());
+                this.carousel.addEventListener('mouseleave', () => this.startAutoPlay());
+                
+                let startX = 0;
+                this.carousel.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                });
+                this.carousel.addEventListener('touchend', (e) => {
+                    const endX = e.changedTouches[0].clientX;
+                    const diffX = startX - endX;
+                    if (Math.abs(diffX) > 50) {
+                        if (diffX > 0) this.nextSlide();
+                        else this.prevSlide();
+                    }
+                });
+            }
+            
+            updateCarousel() {
+                const offset = -this.currentIndex * 50;
+                this.track.style.transform = `translateX(${offset}%)`;
+                this.updateIndicators();
+            }
+            
+            updateIndicators() {
+                this.indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === this.currentIndex);
+                });
+            }
+            
+            nextSlide() { 
+                this.currentIndex = (this.currentIndex + 1) % this.totalSlides; 
+                this.updateCarousel(); 
+            }
+            
+            prevSlide() { 
+                this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides; 
+                this.updateCarousel(); 
+            }
+            
+            goToSlide(index) { 
+                this.currentIndex = index; 
+                this.updateCarousel(); 
+            }
+            
+            startAutoPlay() { 
+                this.pauseAutoPlay();
+                this.autoPlayInterval = setInterval(() => this.nextSlide(), 4000);
+            }
+            
+            pauseAutoPlay() { 
+                if (this.autoPlayInterval) {
+                    clearInterval(this.autoPlayInterval);
+                    this.autoPlayInterval = null;
+                }
+            }
+        }
+
+        // FORM SUBMISSION
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyTi-FY5nk2YLBEleDvN4sEoW9EZraEkXxPoKoUfg-VsXYN4rikOom_GY92nY9u1DCldQ/exec'; 
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new EventCarousel();
+            
+            document.getElementById('studentForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('submitBtn');
+                const msgDiv = document.getElementById('message');
+                
+                btn.disabled = true;
+                btn.innerHTML = 'Processing...';
+                msgDiv.innerHTML = '<div class="portal-message portal-success">Submitting, please wait...</div>';
+
+                const formData = new FormData();
+                formData.append('surname', document.getElementById('surname').value.trim().toUpperCase());
+                formData.append('firstName', document.getElementById('firstName').value.trim().toUpperCase());
+                formData.append('middleName', document.getElementById('middleName').value.trim().toUpperCase());
+                formData.append('nameExt', document.getElementById('nameExt').value.trim().toUpperCase());
+                formData.append('gradeLevel', document.getElementById('gradeLevel').value);
+                formData.append('section', document.getElementById('section').value.trim().toUpperCase());
+                formData.append('dateOfBirth', document.getElementById('dateOfBirth').value);
+                formData.append('age', document.getElementById('age').value);
+                formData.append('sex', document.getElementById('sex').value);
+                formData.append('presentRank', document.getElementById('presentRank').value.trim().toUpperCase());
+                formData.append('recruiter', document.getElementById('recruiter').value.trim().toUpperCase());
+
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 10000);
+                    
+                    const res = await fetch(WEB_APP_URL, { 
+                        method: 'POST', 
+                        body: formData,
+                        signal: controller.signal
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    const text = await res.text();
+                    
+                    if (text.includes('SUCCESS')) {
+                        msgDiv.innerHTML = '<div class="portal-message portal-success">Registration successful! Visit the resources page to complete your requirements.</div>';
+                        document.getElementById('studentForm').reset();
+                    } else {
+                        throw new Error('Server response invalid');
+                    }
+                } catch (error) {
+                    if (error.name === 'AbortError') {
+                        msgDiv.innerHTML = '<div class="portal-message portal-error">⏰ Request timeout. Please try again.</div>';
+                    } else {
+                        msgDiv.innerHTML = '<div class="portal-message portal-error">❌ Failed to submit. Please check your connection and try again.</div>';
+                    }
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = 'Submit Registration';
+                }
+            });
+        });
+    </script>
+<script>
+        // Load Header (includes sidebar!) & Footer
+        fetch('../headerfooter/header.html')
+            .then(r => r.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                initNavigation();
+            });
+
+        fetch('../headerfooter/footer.html')
+            .then(r => r.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
+        // UNIVERSAL NAVIGATION
+        function setActiveNav() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const pageMap = {
+                'index.html': 'home',
+                'about.html': 'about',
+                'resources.html': 'resources',
+                'leadership.html': 'leadership',
+                'history.html': 'history',
+                'shop.html': 'shop',
+                'regisportal.html': 'regisportal'
+            };
+            const currentDataPage = pageMap[currentPage] || 'home';
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.page === currentDataPage) btn.classList.add('active');
+            });
+
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === currentDataPage) link.classList.add('active');
+            });
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            const spans = hamburger.querySelectorAll('span');
+            if (sidebar.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                document.body.style.overflow = 'hidden';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
+        function initNavigation() {
+            setActiveNav();
+            document.getElementById('hamburger').onclick = toggleSidebar;
+            document.getElementById('overlay').onclick = toggleSidebar;
+            
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.getElementById('sidebar').classList.remove('active');
+                    document.getElementById('overlay').classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+            
+            window.addEventListener('popstate', setActiveNav);
+        }
+
+        window.addEventListener('load', () => setTimeout(initNavigation, 100));
+    </script>
+</body>
+</html>

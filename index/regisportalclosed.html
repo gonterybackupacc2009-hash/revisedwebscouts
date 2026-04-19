@@ -1,40 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MNCHS Senior Scouting</title>
     <link rel="icon" type="image/x-icon" href="/images/org-logo.png">
-    <link rel="stylesheet" href="about.css">
-    <link rel="stylesheet" href="../headerfooter/headerfooter.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="regisportalclosed.css">
+<link rel="stylesheet" href="../headerfooter/headerfooter.css">
 </head>
 <body>
 
+    <!-- OVERLAY -->
     <div class="overlay" id="overlay"></div>
-<!-- HEADER WILL BE LOADED HERE -->
 <div id="header-placeholder"></div>
 
-    <main>
-        <section class="content-section">
-            <div class="content-text">
-                <h2>BSP MISSION 2025</h2>
-                <p>To help the youth develop values and acquire competencies to become responsible leaders and capable anchored on the Scout Oath and Law.</p>
-            </div>
-            <img src="../images/aboutimages/MISION.png" class="content-image">
-        </section>
-
-        <section class="content-section reverse">
-            <div class="content-text">
-                <h2>BSP VISION 2025</h2>
-                <p>Foremost in preparing the youth to become agents of change in communities guided by the Scout Oath and Law.</p>
-            </div>
-            <img src="../images/aboutimages/VISSION.png" class="content-image">
-        </section>
-        <div id="footer-placeholder"></div>
+    <!-- CLEAN MAIN CONTENT - READY FOR YOUR CONTENT -->
+    <main class="main-content">
+        <p>Registration is currently <strong>closed.</strong> Follow our Facebook page to get notified when recruitment opens!</p>
     </main>
 
+    <!-- Footer - FIXED POSITION -->
+<div id="footer-placeholder"></div>
+
     <script>
+        // SIDEBAR FUNCTIONALITY
         const hamburger = document.getElementById('hamburger');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
@@ -43,6 +32,7 @@
             sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
             
+            // Animate hamburger
             const spans = hamburger.querySelectorAll('span');
             if (sidebar.classList.contains('active')) {
                 spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
@@ -55,13 +45,16 @@
             }
         }
 
+        // Event listeners
         hamburger.addEventListener('click', toggleSidebar);
         overlay.addEventListener('click', toggleSidebar);
 
+        // Close sidebar when clicking nav links
         document.querySelectorAll('.sidebar-nav a').forEach(link => {
             link.addEventListener('click', () => {
                 sidebar.classList.remove('active');
                 overlay.classList.remove('active');
+                // Reset hamburger animation
                 const spans = hamburger.querySelectorAll('span');
                 spans[0].style.transform = 'none';
                 spans[1].style.opacity = '1';

@@ -791,6 +791,9 @@
         padding: 20px 10px;
     }
     
+.pageheader {
+    margin-bottom: -160px !important;
+}
     .product-card {
         height: 280px;
     }
@@ -925,7 +928,7 @@
     .shop-container {
         grid-template-columns: repeat(2, 1fr); /* Still 3 items per row */
         gap: 12px;
-        padding: 20px 8px;
+        padding: 20px 4px;
     }
     
     .product-card {
