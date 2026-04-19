@@ -391,6 +391,9 @@
         }
 
         @media (max-width: 768px) {
+              body {
+                padding: 85px 0;
+            }
             .hamburger {
                 display: flex;
             }
