@@ -435,6 +435,9 @@ body {
     text-align: center;
     transition: all 0.3s ease;
     flex: 1;
+    border-top: solid 8px #010160;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     max-width: 320px;
     min-width: 280px;
 }

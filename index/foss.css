@@ -1,0 +1,364 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-color: #111111;
+        }
+
+.content-section {
+    max-width: 1200px;
+    margin: 120px auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column; /* Changed to column */
+    align-items: center;    /* Center items horizontally */
+    gap: 40px;
+    min-height: 400px;
+}
+.resource-cards {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.resource-card {
+    background: #e5e5e5;
+    padding: 25px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border-top: solid 8px #ffbf00;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    flex: 1;
+    max-width: 320px;
+    min-width: 280px;
+}
+
+.resource-image {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px;
+    border-radius: 360px;
+    overflow: hidden;
+}
+
+.resource-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.resource-card h3 {
+    font-size: 22px;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.resource-card p {
+    color: #595959;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.download-btn {
+    display: inline-block;
+    background-color: #202020;
+    color: rgb(255, 255, 255);
+    padding: 12px 30px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.download-btn:hover {
+    background-color: #424242;
+    color: white;
+}
+.content-section2 {
+    max-width: 100%;
+    margin: 120px 0 0 0;  /* Remove bottom margin */
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    min-height: 100%;
+    background-color: #e9e9e9;
+}
+
+.content-section3 {
+    max-width: 100%;
+    margin: 0 0 120px 0;  /* Remove top margin */
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    min-height: 100%;
+    background-color: #e9e9e9;
+}
+
+
+.content-text {
+    flex: 1;
+    padding: 40px;
+    color: white;
+    border-top: solid 4px #3c3c3c;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 100%;       /* Limit text width for better readability */
+}
+
+.content-text2 {
+    padding: 40px;
+    color: wide;
+    text-align: left;        /* Center the text content */
+    width: 100%;
+    max-width: 1200px;          /* Set your desired max width */
+    margin: 0 auto;            /* Centers the container perfectly */
+    align-items: center;       /* Remove if not needed (for flex children) */
+}
+
+.content-text3 {
+    padding: 40px;
+    color: wide;
+    text-align: right;        /* Center the text content */
+    width: 100%;
+    max-width: 1200px;          /* Set your desired max width */
+    margin: 0 auto;            /* Centers the container perfectly */
+    align-items: center;       /* Remove if not needed (for flex children) */
+}
+
+.content-image-title {
+    flex: 1;
+    height: 480px;          /* Give it a fixed height instead of 100% */
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -400px;
+    margin-bottom: -400px;
+    color: #888;
+    font-size: 18px;
+    width: 100%;            /* Full width */
+    max-width: 940px;       /* Limit max width */
+    /* Remove the negative margins - they're causing layout issues */
+}
+
+.content-image-title img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Image scales to fit within container while maintaining aspect ratio */
+    object-position: center;
+}
+
+.content-section.reverse {
+    flex-direction: column; /* Same layout for both directions */
+}
+
+        .content-text h2 {
+            color: #fdc90e;
+            font-size: 44px;
+            margin-bottom: 20px;
+            font-weight: 780;
+        }
+        .content-text2 h2 {
+            color: #0d0d0d;
+            font-size: 44px;
+            margin-bottom: 20px;
+            font-weight: 780;
+            border-bottom: solid 2px #aeaeae;
+        }
+        .content-text3 h2 {
+            color: #0d0d0d;
+            font-size: 44px;
+            margin-bottom: 20px;
+            font-weight: 780;
+            border-bottom: solid 2px #aeaeae;
+        }
+        .emailphone {
+            text-align: right;
+            line-height: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+        .content-text p {
+            font-size: 22px;
+            line-height: 1.5;
+            color: #e9e9e9;
+        }
+        .content-text2 p {
+            font-size: 22px;
+            line-height: 1.5;
+            color: #0e0e0e;
+        }
+        .content-text3 p {
+            font-size: 22px;
+            line-height: 1.5;
+            color: #0e0e0e;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #eee;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .emailphone {
+            text-align: center;
+            line-height: 25px;
+            margin-right: 14%;
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+        }
+            .nav-buttons {
+                display: none;
+            }
+
+    .header-white-content {
+        padding: 0 15px !important;
+    }
+    .header-blue {
+        padding: 20px 15px !important;
+        padding-top: 64px !important;
+    }
+    .header-blue-content {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 8px !important;
+        padding: 0 10px !important;
+    }
+    .blue-logo {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        margin: 0 !important;
+        flex-shrink: 0 !important;
+    }
+    .blue-logo img {
+        width: 42px !important;
+        height: 42px !important;
+    }
+    .blue-text {
+        display: block !important;
+        text-align: center !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+    .blue-text h3 {
+        font-size: 18px !important;
+        margin: 0 0 2px 0 !important;
+    }
+    .blue-text .outfit-id {
+        font-size: 14px !important;
+    }
+    .emailphone {
+        display: none !important;  /* HIDDEN ON MOBILE */
+    }
+
+            .content-section {
+                flex-direction: column;
+                margin: 80px auto;
+                gap: 10px;
+            }
+
+            .content-section.reverse {
+                flex-direction: column;
+            }
+
+.content-image-title {
+    flex: 1;
+    height: 480px;          /* Give it a fixed height instead of 100% */
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -120px;
+    margin-bottom: -350px;
+    color: #888;
+    font-size: 18px;
+    width: 100%;            /* Full width */
+    max-width: 940px;       /* Limit max width */
+    /* Remove the negative margins - they're causing layout issues */
+}
+
+.content-image-title img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Image scales to fit within container while maintaining aspect ratio */
+    object-position: center;
+}
+            .content-text {
+                padding: 20px;
+            }
+
+            .content-text h2 {
+                margin-top: 50%;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .sidebar {
+                width: 260px;
+                left: -260px;
+            }
+
+            .content-text {
+                padding: 20px;
+            }
+
+            .content-text h2 {
+                font-size: 24px;
+                margin-top: 25%;
+            }
+.content-image-title {
+    flex: 1;
+    height: 480px;          /* Give it a fixed height instead of 100% */
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -80px;
+    margin-bottom: -400px;
+    color: #888;
+    font-size: 18px;
+    width: 100%;            /* Full width */
+    max-width: 940px;       /* Limit max width */
+    /* Remove the negative margins - they're causing layout issues */
+}
+
+.content-image-title img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Image scales to fit within container while maintaining aspect ratio */
+    object-position: center;
+}
+        }

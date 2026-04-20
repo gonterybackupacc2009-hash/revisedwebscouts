@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MNCHS Senior Scouting</title>
+    <link rel="icon" type="image/x-icon" href="/images/org-logo.png">
+    <link rel="stylesheet" href="foss.css">
+    <link rel="stylesheet" href="../headerfooter/headerfooter.css">
+
+</head>
+<body>
+
+    <div class="overlay" id="overlay"></div>
+<!-- HEADER WILL BE LOADED HERE -->
+<div id="header-placeholder"></div>
+
+    <main>
+        <section class="content-section">
+            <img src="../images/fossimages/FOSS1.png" class="content-image-title">
+                                <div class="content-text">
+                <h2>FIVE OUTSTANDING SENIOR SCOUTS</h2>
+                <p>The search for the five outstanding senior scouts is on-going at Masbate National Comprehensive High School. The Five Outstanding Senior Scouts (FOSS) aim to recognize the hard-work, talent, and determination of Scout candidates at Outfit 002.</p>
+            </div>
+  
+        </section>
+        <section class="content-section2">
+            <div class="content-text2">
+                <h2>ABOUT</h2>
+                <p>Every year starting this school year of 2026 - 2027, the Masbate National Comprehensive High School Senior Scouts aim to mold and develop and select five Scouts that have shown their determination to the organization, where they can serve and hold the title of "Outstanding Senior Scout" for one year, acting as a role model and example for future generations of Scouts.</p>
+            </div>
+        </section>
+        <section class="content-section3">
+            <div class="content-text3">
+                <h2>SELECTION</h2>
+                <p>To be an official candidate for the Five Outstanding Senior Scouts, a candidate application form must be submitted to the Screening Committee before the discussed deadline. FOSS is open to all Scouts with at least a year of experience in the organization.</p>
+            </div>
+        </section>
+        <section class="content-section">
+<div class="resource-cards">
+    <div class="resource-card">
+        <div class="resource-image">
+            <img src="../images/fossimages/FOSSCIRCLE.png" alt="Resource 1">
+        </div>
+        <h3>FOSS Candidate Application Form</h3>
+        <p>Your first step in becoming a candidate for the search for the Five Outstanding Senior Scouts.</p>
+        <a href="https://drive.google.com/uc?export=download&id=14jXM9nCip8jRLke7yxa-weIUeY5PQ1NQ" class="download-btn" download>Download PDF</a>
+    </div>
+    
+    <div class="resource-card">
+        <div class="resource-image">
+            <img src="../images/fossimages/FOSSCIRCLE.png" alt="Resource 2">
+        </div>
+        <h3>Guidelines in the Selection for FOSS Vol. 1</h3>
+        <p>The in-depth guidelines of the selection for the Five Outstanding Senior Scouts Volume 1.</p>
+        <a href="https://drive.google.com/file/d/1rdRllR7oA87HrKrX1RjQt3QOfBtHLakv/view?usp=sharing" class="download-btn" target="_blank">View PDF</a>
+    </div>
+</section>
+    <div id="footer-placeholder"></div>
+    </main>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            const spans = hamburger.querySelectorAll('span');
+            if (sidebar.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        }
+
+        hamburger.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
+        document.querySelectorAll('.sidebar-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+                const spans = hamburger.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+    </script>
+<script>
+        // Load Header (includes sidebar!) & Footer
+        fetch('../headerfooter/header.html')
+            .then(r => r.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                initNavigation();
+            });
+
+        fetch('../headerfooter/footer.html')
+            .then(r => r.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+
+        // UNIVERSAL NAVIGATION
+        function setActiveNav() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const pageMap = {
+                'index.html': 'home',
+                'foss.html': 'foss',
+                'resources.html': 'resources',
+                'leadership.html': 'leadership',
+                'history.html': 'history',
+                'shop.html': 'shop'
+            };
+            const currentDataPage = pageMap[currentPage] || 'home';
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.page === currentDataPage) btn.classList.add('active');
+            });
+
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === currentDataPage) link.classList.add('active');
+            });
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            const spans = hamburger.querySelectorAll('span');
+            if (sidebar.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                document.body.style.overflow = 'hidden';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
+        function initNavigation() {
+            setActiveNav();
+            document.getElementById('hamburger').onclick = toggleSidebar;
+            document.getElementById('overlay').onclick = toggleSidebar;
+            
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.getElementById('sidebar').classList.remove('active');
+                    document.getElementById('overlay').classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+            
+            window.addEventListener('popstate', setActiveNav);
+        }
+
+        window.addEventListener('load', () => setTimeout(initNavigation, 100));
+    </script>
+</body>
+</html>
