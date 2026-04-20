@@ -43,6 +43,8 @@
     overflow: hidden !important;
     margin: 0 auto !important; /* Centers it within its container */
     justify-content: left !important; /* Centers the content horizontally */
+            border-top-right-radius: 15px;
+            border-top-left-radius: 15px;
 }
         .updates-header2 {
             background-color: #010160 !important;

@@ -40,6 +40,7 @@
     background: white;
     transition: all 0.3s ease;
     position: relative;
+
 }
 
 .rank-item.active .rank-header {
@@ -98,6 +99,8 @@
     color: white;
     font-weight: 700;
     overflow: hidden !important;
+            border-top-right-radius: 15px;
+            border-top-left-radius: 15px;
 }
 .rank-dropdown {
     max-height: 0;

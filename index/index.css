@@ -12,7 +12,7 @@
         }
         .carousel-wrapper {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1220px;
             margin: 0 auto 60px;
         }
         .carousel-container {
@@ -37,24 +37,96 @@
             height: auto;
             display: block;
         }
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: #ddd;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .dot.active {
-            background-color: #1976D2;
-            transform: scale(1.2);
-        }
+/* ADD THESE NEW STYLES */
+.carousel-nav-buttons {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    pointer-events: none; /* Allows clicks to pass through to buttons */
+    z-index: 10;
+}
+
+.carousel-prev,
+.carousel-next {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    pointer-events: all; /* Buttons can receive clicks */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-prev::before,
+.carousel-next::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+}
+
+.carousel-prev::before {
+    border-right-color: #333;
+}
+
+.carousel-next::before {
+    border-left-color: #333;
+}
+
+/* Updated carousel container */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px; /* Slightly larger radius */
+}
+
+/* Dots positioning - below image */
+.carousel-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 0;
+    z-index: 10;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.dot.active {
+    background-color: #1976D2;
+    transform: scale(1.3);
+    box-shadow: 0 0 10px rgba(25, 118, 210, 0.6);
+}
         .counter-container {
             display: flex;
             gap: 10px;
@@ -245,6 +317,8 @@
             font-size: 19px;
             letter-spacing: 2px;
             margin-bottom: 15px;
+            border-top-right-radius: 15px;
+            border-top-left-radius: 15px;
         }
         .scouts-image {
             width: 120px;
@@ -292,6 +366,8 @@
             display: flex !important;
             align-items: stretch !important;
             overflow: hidden !important;
+            border-top-right-radius: 15px;
+            border-top-left-radius: 15px;
         }
         .updates-header2 {
             background-color: #010160 !important;
@@ -304,6 +380,8 @@
             gap: 30px !important;
             align-items: stretch !important;
             overflow: hidden !important;
+            border-top-right-radius: 15px;
+            border-top-left-radius: 15px;
         }
         .updates-header h2 {
             font-size: 19px;
@@ -450,6 +528,7 @@
     cursor: pointer;
     font-weight: 600;
     display: block;
+    transition: all 0.2s;
 }
 
 .registerbtn:hover {

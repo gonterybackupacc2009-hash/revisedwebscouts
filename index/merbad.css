@@ -34,6 +34,8 @@ body {
     color: white;
     font-weight: 700;
     overflow: hidden !important;
+            border-top-right-radius: 15px;
+            border-top-left-radius: 15px;
 }
 
 /* Skill letter headers - span full width */
@@ -48,6 +50,8 @@ body {
     background-color: #010160;
     text-transform: uppercase;
     letter-spacing: 1px;
+            border-top-right-radius: 15px;
+            border-top-left-radius: 15px;
 }
 
 /* Main clickable item styling */
