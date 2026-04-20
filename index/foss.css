@@ -322,5 +322,21 @@
 
             .content-text h2 {
                 margin-top: 50%;
+                font-size: 35px;
+            }
+            .content-text p {
+                font-size: 18px;
+            }
+            .content-text2 h2 {
+                font-size: 35px;
+            }
+            .content-text2 p {
+                font-size: 18px;
+            }
+            .content-text3 h2 {
+                font-size: 35px;
+            }
+            .content-text3 p {
+                font-size: 18px;
             }
         }
