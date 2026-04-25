@@ -7,8 +7,9 @@
 body {
     font-family: 'Arial', sans-serif;
     min-height: 100vh;
-    padding: 40px 20px;
-    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
 }
 
 /* Main container for merit badges */
@@ -53,7 +54,66 @@ body {
             border-top-right-radius: 15px;
             border-top-left-radius: 15px;
 }
+.pagetopheader {
+    flex: 1;
+    height: 520px;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 640px;
+    position: relative;
+    overflow: hidden;
+}
 
+.pagetopheader img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.pagetopheader::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(1, 4, 39, 0.727);
+}
+
+.header-text {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 2; /* Above overlay */
+    width: 80%; /* Responsive width */
+}
+
+.small-text {
+    font-size: 18px;
+    font-weight: 300;
+    margin-bottom: 10px;
+    opacity: 0.9;
+    color: rgb(255, 255, 255);
+}
+
+.small-text strong {
+    color: rgb(238, 171, 13);
+    font-weight: 600;
+}
+
+.big-title {
+    font-size: 78px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
+    text-shadow: 4px 2px 4px rgba(0,0,0,0.5);
+    color: rgb(255, 255, 255);
+}
 /* Main clickable item styling */
 .clickable-item {
     background-color: #f5f5f5;
@@ -136,7 +196,15 @@ body {
 .modal.active {
     display: flex !important;
 }
+        .main-content {
+    padding: 20px;
+    animation: fadeIn 1s ease;
+}
 
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 .modal-content {
     position: relative !important;
     z-index: 100000 !important;
@@ -239,8 +307,8 @@ body {
 }
 
 @media (max-width: 768px) {
-    body {
-        padding: 20px 15px;
+    .body {
+        padding: 15px;
     }
     
     .skills-grid {
@@ -302,5 +370,88 @@ body {
     
     .rank-item {
         min-height: 140px;
+    }
+}
+
+@media (max-width: 768px) {
+    .pagetopheader {
+        height: 450px;
+        min-width: 100%;
+    }
+    
+    .header-text {
+        width: 95%;
+        top: 55%;
+    }
+    
+    .small-text {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+    
+    .big-title {
+        font-size: 56px;
+        margin-bottom: 12px;
+        line-height: 1.1;
+    }
+}
+
+/* Mobile Large (481px - 767px) */
+@media (max-width: 480px) {
+    .pagetopheader {
+        height: 400px;
+    }
+    
+    .header-text {
+        top: 52%;
+        padding: 0 15px;
+    }
+    
+    .small-text {
+        font-size: 15px;
+    }
+    
+    .big-title {
+        font-size: 42px;
+        text-shadow: 2px 1px 3px rgba(0,0,0,0.7);
+    }
+}
+
+/* Mobile Small (320px - 480px) */
+@media (max-width: 480px) {
+    .pagetopheader {
+        height: 350px;
+    }
+    
+    .header-text {
+        top: 50%;
+        width: 100%;
+        padding: 0 10px;
+    }
+    
+    .small-text {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+    
+    .big-title {
+        font-size: 36px;
+        margin-bottom: 10px;
+        line-height: 1.1;
+    }
+}
+
+/* Extra Small Mobile (under 360px) */
+@media (max-width: 360px) {
+    .pagetopheader {
+        height: 320px;
+    }
+    
+    .small-text {
+        font-size: 13px;
+    }
+    
+    .big-title {
+        font-size: 32px;
     }
 }
