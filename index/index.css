@@ -835,23 +835,30 @@
                 width: 100%;
             }
             .update-image {
-                width: 95px !important;
+                width: 110px !important;
             }
             .update-content {
                 padding: 12px 15px 12px 0 !important;
             }
             .update-title {
-                font-size: 13px !important;
+                font-size: 15px !important;
             }
             .update-description {
                 font-size: 9px !important;
+                display: none;
             }
-
+.duties-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+}
             .duty-image {
-                width: 260px !important;
-                height: 260px !important;
-            }
+                width: 90px !important;
+                height: 90px !important;
 
+            }
             .registersec {
                 padding: 30px 15px !important;
                 gap: 15px !important;
@@ -861,7 +868,7 @@
                 max-width: 400px !important;
             }
             .registerbtn {
-                width: 98% !important;
+                width: 100% !important;
                 font-size: 24px !important;
                 height: 55px !important;
             }
