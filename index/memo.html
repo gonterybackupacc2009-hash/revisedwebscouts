@@ -35,6 +35,18 @@
                 <div class="update-item">
                          <img src="../images/indeximages/newlogo.png" alt="Update 1" class="update-image">
                     <div class="update-content">
+                        <div class="update-date">May 14, 2026</div>
+                        <a href="../memos/CourtOfHonor_Letter.pdf" target="_blank" class="update-title-link" style="text-decoration: none;">
+                        <div class="update-title">➤ Court of Honor and Turnover Ceremony</div>
+                        </a>
+                        <div class="update-description">
+                            The authorization letter to use the Centennial Auditorium for the turnover ceremony and institutional court of honor. Click for more information.
+                        </div>
+                    </div>
+                </div>
+                <div class="update-item">
+                         <img src="../images/indeximages/newlogo.png" alt="Update 2" class="update-image">
+                    <div class="update-content">
                         <div class="update-date">April 19, 2026</div>
                         <a href="../memos/ResultsBOR_March_24_2026.pdf" target="_blank" class="update-title-link" style="text-decoration: none;">
                         <div class="update-title">➤ March 24 BOR Results</div>
@@ -42,7 +54,6 @@
                         <div class="update-description">
                             The results for the Board of Review for <strong>EXPLORER, PATHFINDER, and OUTDOOR SCOUTS</strong> held on March 24, 2026 at the MNCHS Centennial Auditorium. Click for more information.
                         </div>
-                    </div>
                 </div>
             </section>
         </section>
@@ -273,31 +284,62 @@
     </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
-function loadPDFPreview(pdfUrl, imgElement) {
-    pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
-        pdf.getPage(1).then(page => {
+    // Initialize PDF.js worker (Required for version 3.x)
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    // Function to render the first page of a PDF to an image
+    function loadPDFPreview(pdfUrl, imgElement) {
+        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+            return pdf.getPage(1);
+        }).then(page => {
+            // Scale: 0.5 creates a thumbnail
             const scale = 0.5;
-            const viewport = page.getViewport({scale});
+            const viewport = page.getViewport({ scale: scale });
+            
+            // Create a temporary canvas
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
             canvas.height = viewport.height;
             canvas.width = viewport.width;
-            
-            page.render({
+
+            // Render the PDF page to the canvas
+            const renderContext = {
                 canvasContext: context,
                 viewport: viewport
-            }).promise.then(() => {
-                imgElement.src = canvas.toDataURL();
+            };
+            return page.render(renderContext).promise.then(() => {
+                // Convert canvas to image and set as source
+                imgElement.src = canvas.toDataURL('image/png');
+                // Optional: Remove placeholder background once loaded
+                imgElement.style.background = 'transparent';
             });
+        }).catch(error => {
+            console.error('Error loading PDF preview:', error);
+            imgElement.alt = 'Preview not available';
+        });
+    }
+
+    // Loop through all update items and load the correct PDF for each
+    window.addEventListener('load', () => {
+        const updateItems = document.querySelectorAll('.update-item');
+
+        updateItems.forEach(item => {
+            // Find the link inside this specific item
+            const link = item.querySelector('.update-title-link');
+            // Find the image inside this specific item
+            const img = item.querySelector('.update-image');
+
+            if (link && img) {
+                // Get the href from the link
+                const pdfUrl = link.getAttribute('href');
+                
+                // Only attempt to load if it's a PDF
+                if (pdfUrl && pdfUrl.toLowerCase().endsWith('.pdf')) {
+                    loadPDFPreview(pdfUrl, img);
+                }
+            }
         });
     });
-}
-
-// Load preview when page loads
-window.addEventListener('load', () => {
-    const previewImg = document.querySelector('.update-image');
-    loadPDFPreview('../memos/ResultsBOR_March_24_2026.pdf', previewImg);
-});
 </script>
 </body>
 </html>
