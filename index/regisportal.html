@@ -204,6 +204,7 @@
     <!-- Footer -->
 <div id="footer-placeholder"></div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 // Load Header & Footer FIRST
 Promise.all([
@@ -215,7 +216,67 @@ Promise.all([
     initNavigation();
 }).catch(err => console.error('Failed to load header/footer:', err));
 
-// PORTAL CAROUSEL CLASS (unchanged)
+// ==== MAIN FORM SUBMISSION FUNCTION - DEFINED FIRST ====
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw_COl4rPg3VkbFrNw6UYhWZlupddhq1K8qjeZ8pQ6eWWqXT4h5r95AJb0mSLYwjptmIQ/exec';
+
+function submitForm() {
+    console.log('submitForm called');
+    
+    const form = document.getElementById('studentForm');
+    const btn = document.getElementById('submitBtn');
+    const msgDiv = document.getElementById('message');
+    
+    // Validate required fields
+    const requiredFields = ['surname', 'firstName', 'gradeLevel', 'section', 'dateOfBirth', 'age', 'sex', 'presentRank'];
+    for (let field of requiredFields) {
+        const input = document.getElementById(field);
+        if (!input.value.trim()) {
+            msgDiv.innerHTML = '<div class="portal-message portal-error">❌ Please fill all required fields (*)</div>';
+            input.focus();
+            return false;
+        }
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = 'Processing...';
+    msgDiv.innerHTML = '<div class="portal-message portal-success">Submitting, please wait...</div>';
+
+    const formData = new FormData();
+    formData.append('surname', document.getElementById('surname').value.trim().toUpperCase());
+    formData.append('firstName', document.getElementById('firstName').value.trim().toUpperCase());
+    formData.append('middleName', document.getElementById('middleName').value.trim().toUpperCase());
+    formData.append('nameExt', document.getElementById('nameExt').value.trim().toUpperCase());
+    formData.append('gradeLevel', document.getElementById('gradeLevel').value);
+    formData.append('section', document.getElementById('section').value.trim().toUpperCase());
+    formData.append('dateOfBirth', document.getElementById('dateOfBirth').value);
+    formData.append('age', document.getElementById('age').value);
+    formData.append('sex', document.getElementById('sex').value);
+    formData.append('presentRank', document.getElementById('presentRank').value.trim().toUpperCase());
+    formData.append('recruiter', document.getElementById('recruiter').value.trim().toUpperCase());
+
+    fetch(WEB_APP_URL, { 
+        method: 'POST', 
+        body: formData,
+        mode: 'no-cors'
+    })
+    .then(response => {
+        console.log('Form submitted successfully');
+        msgDiv.innerHTML = '<div class="portal-message portal-success">✅ Registration successful! Visit the resources page to complete your requirements.</div>';
+        form.reset();
+    })
+    .catch(error => {
+        console.error('Submission error:', error);
+        msgDiv.innerHTML = '<div class="portal-message portal-error">❌ Failed to submit. Please check your connection and try again.</div>';
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = 'Submit Registration';
+    });
+    
+    return false;
+}
+
+// ==== PORTAL CAROUSEL CLASS ====
 class EventCarousel {
     constructor() {
         this.currentIndex = 0;
@@ -236,6 +297,7 @@ class EventCarousel {
     
     createIndicators() {
         const indicatorsContainer = document.getElementById('indicators');
+        if (!indicatorsContainer) return;
         indicatorsContainer.innerHTML = '';
         this.indicators = [];
         this.slides.forEach((_, index) => {
@@ -268,7 +330,7 @@ class EventCarousel {
     
     updateCarousel() {
         const offset = -this.currentIndex * 50;
-        this.track.style.transform = `translateX(${offset}%)`;
+        this.track.style.transform = 'translateX(' + offset + '%)';
         this.updateIndicators();
     }
     
@@ -306,103 +368,37 @@ class EventCarousel {
     }
 }
 
-// DATA PRIVACY MODAL - SHOWS ON PAGE LOAD
+// ==== DATA PRIVACY MODAL ====
 const privacyModal = document.getElementById('privacyModal');
 const privacyAgree = document.getElementById('privacyAgree');
 const privacyProceed = document.getElementById('privacyProceed');
-const privacyClose = document.querySelector('.privacy-close');
 
-// Handle checkbox and proceed button
-privacyAgree.addEventListener('change', function() {
-    privacyProceed.disabled = !this.checked;
-    privacyProceed.classList.toggle('enabled', this.checked);
-});
+if (privacyAgree && privacyProceed) {
+    privacyAgree.addEventListener('change', function() {
+        privacyProceed.disabled = !this.checked;
+        privacyProceed.classList.toggle('enabled', this.checked);
+    });
 
-privacyProceed.addEventListener('click', function() {
-    if (privacyAgree.checked) {
-        localStorage.setItem('privacyAccepted', 'true'); // Remember acceptance
-        privacyModal.style.display = 'none';
-        document.body.style.overflow = '';
-    }
-});
-
-privacyClose.addEventListener('click', function() {
-    privacyModal.style.display = 'none';
-    document.body.style.overflow = '';
-});
-
-window.addEventListener('click', function(event) {
-    if (event.target === privacyModal) {
-        privacyModal.style.display = 'none';
-        document.body.style.overflow = '';
-    }
-});
-
-// Check if user already accepted privacy
-if (localStorage.getItem('privacyAccepted') !== 'true') {
-    // Show modal on page load if not accepted
-    setTimeout(() => {
-        privacyModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    }, 500); // Small delay for smooth load
-}
-
-// FORM SUBMISSION - BACK TO ORIGINAL (no modal interference)
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyTi-FY5nk2YLBEleDvN4sEoW9EZraEkXxPoKoUfg-VsXYN4rikOom_GY92nY9u1DCldQ/exec';
-
-function submitForm() {
-    const form = document.getElementById('studentForm');
-    const btn = document.getElementById('submitBtn');
-    const msgDiv = document.getElementById('message');
-    
-    // Validate required fields
-    const requiredFields = ['surname', 'firstName', 'gradeLevel', 'section', 'dateOfBirth', 'age', 'sex', 'presentRank'];
-    for (let field of requiredFields) {
-        const input = document.getElementById(field);
-        if (!input.value.trim()) {
-            msgDiv.innerHTML = `<div class="portal-message portal-error">❌ Please fill all required fields (*)</div>`;
-            input.focus();
-            return;
+    privacyProceed.addEventListener('click', function() {
+        if (privacyAgree.checked) {
+            localStorage.setItem('privacyAccepted', 'true');
+            if (privacyModal) privacyModal.style.display = 'none';
+            document.body.style.overflow = '';
         }
-    }
-
-    btn.disabled = true;
-    btn.innerHTML = 'Processing...';
-    msgDiv.innerHTML = '<div class="portal-message portal-success">Submitting, please wait...</div>';
-
-    const formData = new FormData();
-    formData.append('surname', document.getElementById('surname').value.trim().toUpperCase());
-    formData.append('firstName', document.getElementById('firstName').value.trim().toUpperCase());
-    formData.append('middleName', document.getElementById('middleName').value.trim().toUpperCase());
-    formData.append('nameExt', document.getElementById('nameExt').value.trim().toUpperCase());
-    formData.append('gradeLevel', document.getElementById('gradeLevel').value);
-    formData.append('section', document.getElementById('section').value.trim().toUpperCase());
-    formData.append('dateOfBirth', document.getElementById('dateOfBirth').value);
-    formData.append('age', document.getElementById('age').value);
-    formData.append('sex', document.getElementById('sex').value);
-    formData.append('presentRank', document.getElementById('presentRank').value.trim().toUpperCase());
-    formData.append('recruiter', document.getElementById('recruiter').value.trim().toUpperCase());
-
-    fetch(WEB_APP_URL, { 
-        method: 'POST', 
-        body: formData,
-        mode: 'no-cors'
-    })
-    .then(response => {
-        msgDiv.innerHTML = '<div class="portal-message portal-success">✅ Registration successful! Visit the resources page to complete your requirements.</div>';
-        form.reset();
-    })
-    .catch(error => {
-        console.error('Submission error:', error);
-        msgDiv.innerHTML = '<div class="portal-message portal-error">❌ Failed to submit. Please check your connection and try again.</div>';
-    })
-    .finally(() => {
-        btn.disabled = false;
-        btn.innerHTML = 'Submit Registration';
     });
 }
 
-// UNIVERSAL NAVIGATION (unchanged)
+// Show privacy modal if not accepted
+if (localStorage.getItem('privacyAccepted') !== 'true') {
+    setTimeout(() => {
+        if (privacyModal) {
+            privacyModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    }, 500);
+}
+
+// ==== UNIVERSAL NAVIGATION ====
 function setActiveNav() {
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     const pageMap = {
@@ -438,8 +434,8 @@ function toggleSidebar() {
     sidebar.classList.toggle('active');
     overlay.classList.toggle('active');
     
-    const spans = hamburger?.querySelectorAll('span');
-    if (spans) {
+    const spans = hamburger ? hamburger.querySelectorAll('span') : [];
+    if (spans.length > 0) {
         if (sidebar.classList.contains('active')) {
             spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
             spans[1].style.opacity = '0';
@@ -475,20 +471,33 @@ function initNavigation() {
     window.addEventListener('popstate', setActiveNav);
 }
 
-// MAIN INITIALIZATION
-document.addEventListener('DOMContentLoaded', () => {
-    new EventCarousel();
+// ==== MAIN INITIALIZATION ====
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize carousel
+    if (document.getElementById('eventCarousel')) {
+        new EventCarousel();
+    }
     
-    // Form submission - RESTORED TO ORIGINAL
-    document.getElementById('studentForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        submitForm();
-    });
+    // Form submission handler - CRITICAL: prevent default and return false
+    const form = document.getElementById('studentForm');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();  // STOP PAGE REFRESH
+            e.stopPropagation(); // STOP BUBBLING
+            submitForm();
+            return false;      // EXTRA PREVENTION
+        });
+    }
     
-    // Set min date for DOB
+    // Set max date for DOB (must be at least 7 years old)
     const today = new Date();
     const maxDate = new Date(today.getFullYear() - 7, today.getMonth(), today.getDate()).toISOString().split('T')[0];
-    document.getElementById('dateOfBirth').setAttribute('max', maxDate);
+    const dobInput = document.getElementById('dateOfBirth');
+    if (dobInput) {
+        dobInput.setAttribute('max', maxDate);
+    }
+    
+    console.log('Page initialized');
 });
 </script>
 </body>
