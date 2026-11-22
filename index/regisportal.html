@@ -55,7 +55,7 @@
             <img src="../images/org-logo.png" alt="Left Logo" class="portal-logo">
             <div class="portal-content">
                 <h1>REGISTRATION FORM</h1>
-                <div class="portal-subtitle">Outfit Membership Registration Form</div>
+                <div class="portal-subtitle">Outfit Membership Information System</div>
             </div>
             <img src="../images/school-logo.png" alt="Right Logo" class="portal-logo">
         </div>
@@ -150,12 +150,48 @@
 
 <!-- Recruiter Row (alone on PC, stacks on mobile) -->
 <div class="portal-form-row">
-    <div>
-        <label class="portal-label">Recruiter</label>
-        <input type="text" id="recruiter" class="portal-input" placeholder="Who encouraged you to join? (Leave blank if none)">
+        <div>
+        <label class="portal-label">Municipality *</label>
+        <select id="municipality" class="portal-select" required>
+            <option value="">Select</option>
+            <option>City of Masbate</option>
+            <option>Aroroy</option>
+            <option>Baleno</option>
+            <option>Balud</option>
+            <option>Batuan</option>
+            <option>Cataingan</option>
+            <option>Cawayan</option>
+            <option>Claveria</option>
+            <option>Dimasalang</option>
+            <option>Esperanza</option>
+            <option>Mandaon</option>
+            <option>Milagros</option>
+            <option>Mobo</option>
+            <option>Monreal</option>
+            <option>Palanas</option>
+            <option>Pio V. Corpuz</option>
+            <option>Placer</option>
+            <option>San Fernando</option>
+            <option>San Jacinto</option>
+            <option>San Pascual</option>
+            <option>Uson</option>
+        </select>  
     </div>
-    <div></div>
+    <div>
+        <label class="portal-label">Barangay *</label>
+        <select id="barangay" class="portal-select" required disabled>
+            <option value="">Select Municipality First</option>
+        </select>
+    </div>
 </div>
+
+<div class="portal-form-row">
+    <div>
+        <label class="portal-label">Personal ID Number *</label>
+        <input type="text" id="pin" class="portal-input" required>
+    </div>
+</div>
+
 
                     <button type="submit" id="submitBtn" class="portal-button">Submit Registration</button>
                 </form>
@@ -217,7 +253,7 @@ Promise.all([
 }).catch(err => console.error('Failed to load header/footer:', err));
 
 // ==== MAIN FORM SUBMISSION FUNCTION - DEFINED FIRST ====
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw_COl4rPg3VkbFrNw6UYhWZlupddhq1K8qjeZ8pQ6eWWqXT4h5r95AJb0mSLYwjptmIQ/exec';
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwf1SBI8AostC_gEe-yQ-ooFA606cK5hLFApAfSGHTjXC_4k21D66-eY9alW0ENFCZOhg/exec';
 
 function submitForm() {
     console.log('submitForm called');
@@ -252,7 +288,9 @@ function submitForm() {
     formData.append('age', document.getElementById('age').value);
     formData.append('sex', document.getElementById('sex').value);
     formData.append('presentRank', document.getElementById('presentRank').value.trim().toUpperCase());
-    formData.append('recruiter', document.getElementById('recruiter').value.trim().toUpperCase());
+    formData.append('municipality', document.getElementById('municipality').value.trim().toUpperCase());
+    formData.append('barangay', document.getElementById('barangay').value.trim().toUpperCase());
+    formData.append('pin', "'" + document.getElementById('pin').value.trim().toUpperCase());
 
     fetch(WEB_APP_URL, { 
         method: 'POST', 
@@ -499,6 +537,84 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('Page initialized');
 });
+
+
+
+const municipalitySelect = document.getElementById("municipality");
+const barangaySelect = document.getElementById("barangay");
+
+const PSGC_URL = "https://cdn.jsdelivr.net/gh/Tenasia/ph-psgc@2026-Q2/psgc/areas/0504100000.json";
+
+let masbateData = null;
+
+async function loadMasbateData() {
+    try {
+        const response = await fetch(PSGC_URL);
+
+        if (!response.ok) {
+            throw new Error("Failed to load barangay data.");
+        }
+
+        masbateData = await response.json();
+
+        barangaySelect.disabled = true;
+        barangaySelect.innerHTML =
+            '<option value="">Select Municipality First</option>';
+
+        municipalitySelect.disabled = false;
+
+    } catch (error) {
+        console.error("Error loading Masbate barangays:", error);
+
+        barangaySelect.innerHTML =
+            '<option value="">Unable to Load Barangays</option>';
+    }
+}
+
+municipalitySelect.addEventListener("change", function () {
+    const selectedMunicipality = this.value;
+
+    barangaySelect.innerHTML = "";
+
+    if (!selectedMunicipality || !masbateData) {
+        barangaySelect.disabled = true;
+        barangaySelect.innerHTML =
+            '<option value="">Select Municipality First</option>';
+        return;
+    }
+
+    const municipality = masbateData.cities.find(
+        city => city.name === selectedMunicipality
+    );
+
+    if (!municipality) {
+        barangaySelect.disabled = true;
+        barangaySelect.innerHTML =
+            '<option value="">No Barangays Found</option>';
+        return;
+    }
+
+    barangaySelect.disabled = false;
+
+    barangaySelect.innerHTML =
+        '<option value="">Select Barangay</option>';
+
+    const sortedBarangays = [...municipality.barangays].sort(
+        (a, b) => a[1].localeCompare(b[1])
+    );
+
+    sortedBarangays.forEach(([code, name]) => {
+        const option = document.createElement("option");
+
+        option.value = name;
+        option.textContent = name;
+
+        barangaySelect.appendChild(option);
+    });
+});
+
+loadMasbateData();
+
 </script>
 </body>
 </html>
