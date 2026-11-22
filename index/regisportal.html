@@ -193,13 +193,13 @@
             id="pin"
             class="portal-input"
             value="06-06-"
-            maxlength="12"
-            minlength="12"
+            maxlength="13"
             pattern="06-06-[0-9]{7}"
             placeholder="06-06-XXXXXXX"
             required
             oninput="
-                this.value = '06-06-' + this.value.substring(6).replace(/\D/g, '').slice(0, 7);
+                let numbers = this.value.replace('06-06-', '').replace(/\D/g, '').slice(0, 7);
+                this.value = '06-06-' + numbers;
             "
         >
     </div>
